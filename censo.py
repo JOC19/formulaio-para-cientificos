@@ -24,19 +24,19 @@ st.set_page_config(
 # Archivos
 DB_FILE = "censo_sismologia.db"
 CONFIG_FILE = "config.json"
+LOGO_SIDEBAR = "log.png"       # Logo para el panel izquierdo
+LOGO_HEADER = "logo02.png"     # Logo para el centro del header
 
 # ==================== ESTILOS CSS ====================
 st.markdown("""
     <style>
     .main-header {
-        font-size: 2.5rem;
+        font-size: 2.2rem;
         font-weight: bold;
         color: #1f4e79;
         text-align: center;
-        padding: 1rem;
-        background: linear-gradient(90deg, #e3f2fd 0%, #bbdefb 100%);
-        border-radius: 10px;
-        margin-bottom: 2rem;
+        padding: 0.5rem;
+        margin-bottom: 0.5rem;
     }
     .sub-header {
         font-size: 1.2rem;
@@ -324,16 +324,33 @@ def generar_pdf_censo(df):
     pdf.output(temp_file.name)
     return temp_file.name
 
-# ==================== HEADER ====================
-st.markdown('<div class="main-header">🌋 Censo de Científicos Técnicos</div>', unsafe_allow_html=True)
+# ==================== FUNCIONES PARA MOSTRAR LOGOS ====================
+def mostrar_logo_sidebar():
+    if os.path.exists(LOGO_SIDEBAR):
+        st.sidebar.image(LOGO_SIDEBAR, use_container_width=True)
+    else:
+        st.sidebar.markdown("🌋 **Censo Sismología**")
+
+def mostrar_logo_header():
+    if os.path.exists(LOGO_HEADER):
+        col1, col2, col3 = st.columns([1, 2, 1])
+        with col2:
+            st.image(LOGO_HEADER, use_container_width=True)
+    else:
+        st.markdown("")
+
+# ==================== HEADER CON LOGO CENTRAL ====================
+mostrar_logo_header()
+st.markdown('<div class="main-header">Censo de Científicos Técnicos</div>', unsafe_allow_html=True)
 st.markdown('<div class="sub-header">Área de Sismología y Vulcanología</div>', unsafe_allow_html=True)
 
 # ==================== ESTADO DE SESIÓN ====================
 if 'admin_logged_in' not in st.session_state:
     st.session_state.admin_logged_in = False
 
-# ==================== SIDEBAR ====================
+# ==================== SIDEBAR CON LOGO ====================
 with st.sidebar:
+    mostrar_logo_sidebar()
     st.markdown("### 📊 Panel de Control")
     st.markdown("---")
     
