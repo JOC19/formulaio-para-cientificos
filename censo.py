@@ -34,9 +34,10 @@ st.markdown("""
         font-size: 2.2rem;
         font-weight: bold;
         color: #1f4e79;
-        text-align: center;
-        padding: 0.5rem;
-        margin-bottom: 0.5rem;
+        text-align: left;
+        padding: 0.5rem 0;
+        margin-bottom: 0;
+        margin-top: 0.5rem;
     }
     .sub-header {
         font-size: 1.2rem;
@@ -336,12 +337,23 @@ def mostrar_logo_header():
         col1, col2, col3 = st.columns([1, 2, 1])
         with col2:
             st.image(LOGO_HEADER, use_container_width=True)
+            
+            
     else:
         st.markdown("")
 
-# ==================== HEADER CON LOGO CENTRAL ====================
-mostrar_logo_header()
-st.markdown('<div class="main-header">Censo de Científicos Técnicos</div>', unsafe_allow_html=True)
+# ==================== HEADER CON LOGO AL LADO DEL TÍTULO ====================
+col_logo, col_titulo = st.columns([1, 4])
+
+with col_logo:
+    if os.path.exists(LOGO_HEADER):
+        st.image(LOGO_HEADER, width=80)
+    else:
+        st.markdown("")
+
+with col_titulo:
+    st.markdown('<div class="main-header" style="text-align: left; padding-left: 0;">Censo de Científicos Técnicos</div>', unsafe_allow_html=True)
+
 st.markdown('<div class="sub-header">Área de Sismología y Vulcanología</div>', unsafe_allow_html=True)
 
 # ==================== ESTADO DE SESIÓN ====================
