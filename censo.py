@@ -27,15 +27,70 @@ CONFIG_FILE = "config.json"
 LOGO_SIDEBAR = "log.png"
 LOGO_HEADER = "logo02.png"
 
+# ==================== DATOS DE MUNICIPIOS Y PARROQUIAS DE SUCRE ====================
+MUNICIPIOS_SUCRE = {
+    "Andrés Eloy Blanco (Casanay)": [
+        "Casanay", "Andrés Eloy Blanco"
+    ],
+    "Andrés Mata (San José de Areocuar)": [
+        "San José de Areocuar", "Andrés Mata"
+    ],
+    "Arismendi (Río Caribe)": [
+        "Río Caribe", "Antonio José de Sucre", "El Morro de Puerto Santo", 
+        "Puerto Santo", "San Juan de las Galdonas"
+    ],
+    "Benítez (El Pilar)": [
+        "El Pilar", "El Rincón", "General Francisco Antonio Vázquez", 
+        "Guaraúnos", "Tunapuicito", "Unión"
+    ],
+    "Bermúdez (Carúpano)": [
+        "Carúpano", "Santa Catalina", "Santa Rosa", "Santa Teresa"
+    ],
+    "Bolívar (Marigüitar)": [
+        "Bolívar", "Maracapana", "Marigüitar"
+    ],
+    "Cajigal (Yaguaraparo)": [
+        "Yaguaraparo", "El Paujil", "Libertador"
+    ],
+    "Cruz Salmerón Acosta (Araya)": [
+        "Araya", "Chacopata", "Manicuare"
+    ],
+    "Libertador (Tunapuy)": [
+        "Tunapuy", "Campo Elíseo"
+    ],
+    "Mariño (Irapa)": [
+        "Irapa", "Campo Claro", "Maraval", 
+        "San Antonio de Irapa", "Sosa"
+    ],
+    "Mejía (San Antonio del Golfo)": [
+        "San Antonio del Golfo"
+    ],
+    "Montes (Cumanacoa)": [
+        "Cumanacoa", "Arenas", "Aricagua", 
+        "Cocollar", "San Fernando", "San Lorenzo"
+    ],
+    "Ribero (Cariaco)": [
+        "Cariaco", "Catuaro", "El Rincón", 
+        "Santa Cruz", "Rendón"
+    ],
+    "Sucre (Cumaná)": [
+        "Altagracia", "Ayacucho", "Gran Mariscal", 
+        "Raúl Leoni", "San Juan", "Santa Inés", 
+        "Valentín Valiente"
+    ],
+    "Valdez (Güiria)": [
+        "Güiria", "Bideau", "Cristóbal Colón", 
+        "Flamingo", "Pascual Magallanes"
+    ]
+}
+
 # ==================== ESTILOS CSS TEMA OSCURO MODERNO ====================
 st.markdown("""
     <style>
-    /* Tema oscuro base */
     .stApp {
         background-color: #0f172a;
     }
     
-    /* Header con logo y título */
     .header-container {
         display: flex;
         align-items: center;
@@ -82,7 +137,6 @@ st.markdown("""
         margin-top: 0.5rem;
     }
     
-    /* Sidebar */
     .css-1d391kg, .css-12oz5g7 {
         background-color: #1e293b !important;
     }
@@ -98,7 +152,6 @@ st.markdown("""
         box-shadow: 0 2px 10px rgba(245, 158, 11, 0.3);
     }
     
-    /* Botones */
     .stButton>button {
         background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
         color: white;
@@ -116,7 +169,6 @@ st.markdown("""
         transform: translateY(-2px);
     }
     
-    /* Formularios */
     .stForm {
         background-color: #1e293b;
         padding: 2rem;
@@ -125,7 +177,6 @@ st.markdown("""
         box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
     }
     
-    /* Inputs */
     .stTextInput>div>div>input, .stSelectbox>div>div>select, .stTextArea>div>div>textarea {
         background-color: #334155;
         color: #f1f5f9;
@@ -138,13 +189,11 @@ st.markdown("""
         box-shadow: 0 0 0 2px rgba(56, 189, 248, 0.2);
     }
     
-    /* Labels */
     .stTextInput label, .stSelectbox label, .stTextArea label, .stNumberInput label, .stDateInput label, .stRadio label {
         color: #cbd5e1 !important;
         font-weight: 600;
     }
     
-    /* Mensajes */
     .success-msg {
         padding: 1.2rem;
         background: linear-gradient(135deg, #065f46 0%, #047857 100%);
@@ -169,7 +218,6 @@ st.markdown("""
         color: #e2e8f0;
     }
     
-    /* Login box */
     .login-box {
         max-width: 400px;
         margin: 0 auto;
@@ -180,32 +228,27 @@ st.markdown("""
         box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
     }
     
-    /* Dataframe */
     .stDataFrame {
         background-color: #1e293b;
         border-radius: 12px;
         border: 1px solid #334155;
     }
     
-    /* Radio buttons */
     .stRadio > div {
         background-color: #334155;
         padding: 0.5rem 1rem;
         border-radius: 8px;
     }
     
-    /* Multiselect */
     .stMultiSelect > div > div {
         background-color: #334155;
         border-radius: 8px;
     }
     
-    /* Markdown text */
     .stMarkdown {
         color: #e2e8f0;
     }
     
-    /* Section headers */
     .stMarkdown h3, .stMarkdown h4 {
         color: #38bdf8;
         border-bottom: 2px solid #334155;
@@ -213,19 +256,16 @@ st.markdown("""
         margin-top: 1.5rem;
     }
     
-    /* Sidebar title */
     .css-1d391kg h1, .css-1d391kg h2, .css-1d391kg h3 {
         color: #f8fafc;
     }
     
-    /* Streamlit info */
     .stAlert {
         background-color: #1e293b;
         border: 1px solid #334155;
         border-radius: 12px;
     }
     
-    /* Download button */
     .stDownloadButton>button {
         background: linear-gradient(135deg, #8b5cf6 0%, #7c3aed 100%);
         box-shadow: 0 4px 15px rgba(139, 92, 246, 0.3);
@@ -297,7 +337,8 @@ def init_db():
             misiones_campo TEXT,
             disponibilidad TEXT,
             certificaciones TEXT,
-            ubicacion_geografica TEXT,
+            municipio TEXT,
+            parroquia TEXT,
             comentarios TEXT
         )
     ''')
@@ -324,8 +365,8 @@ def insertar_cientifico(datos):
             fecha_nacimiento, genero, pais, ciudad, profesion, nivel_academico,
             institucion, anos_experiencia, area_especializacion, idiomas,
             equipos_maneja, misiones_campo, disponibilidad, certificaciones,
-            ubicacion_geografica, comentarios
-        ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+            municipio, parroquia, comentarios
+        ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
     ''', datos)
     conn.commit()
     conn.close()
@@ -353,7 +394,7 @@ def actualizar_cientifico(codigo, datos):
             genero=?, pais=?, ciudad=?, profesion=?, nivel_academico=?,
             institucion=?, anos_experiencia=?, area_especializacion=?, idiomas=?,
             equipos_maneja=?, misiones_campo=?, disponibilidad=?, certificaciones=?,
-            ubicacion_geografica=?, comentarios=?
+            municipio=?, parroquia=?, comentarios=?
         WHERE codigo=?
     ''', (*datos, codigo))
     conn.commit()
@@ -414,10 +455,9 @@ def enviar_correo_nuevo_registro(datos_cientifico):
     except Exception as e:
         return False, str(e)
 
-# ==================== FUNCIONES DE PDF CORREGIDAS ====================
+# ==================== FUNCIONES DE PDF ====================
 class PDFCenso(FPDF):
     def header(self):
-        # Logo en el PDF si existe
         if os.path.exists(LOGO_HEADER):
             self.image(LOGO_HEADER, 10, 8, 25)
         
@@ -447,7 +487,6 @@ def generar_pdf_censo(df):
     pdf.add_page()
     pdf.set_font('Arial', '', 8)
     
-    # Encabezados de tabla con color
     pdf.set_fill_color(56, 189, 248)
     pdf.set_text_color(255, 255, 255)
     pdf.set_font('Arial', 'B', 8)
@@ -459,7 +498,6 @@ def generar_pdf_censo(df):
         pdf.cell(col_widths[i], 8, header, 1, 0, 'C', True)
     pdf.ln()
     
-    # Datos
     pdf.set_text_color(30, 41, 59)
     pdf.set_font('Arial', '', 7)
     
@@ -474,12 +512,11 @@ def generar_pdf_censo(df):
         pdf.cell(col_widths[7], 6, str(row['disponibilidad'])[:18], 1, 0, 'L')
         pdf.ln()
     
-    # Guardar en archivo temporal
     temp_file = tempfile.NamedTemporaryFile(delete=False, suffix='.pdf')
     pdf.output(temp_file.name)
     return temp_file.name
 
-# ==================== HEADER CON LOGO Y TÍTULO CENTRADOS ====================
+# ==================== HEADER CON LOGO Y TÍTULO ====================
 col_logo, col_titulo = st.columns([1, 6])
 
 with col_logo:
@@ -507,7 +544,6 @@ if 'admin_logged_in' not in st.session_state:
 
 # ==================== SIDEBAR CON LOGO ====================
 with st.sidebar:
-    mostrar_logo_sidebar = st.sidebar.image if os.path.exists(LOGO_SIDEBAR) else lambda x, **kwargs: st.sidebar.markdown("🌋 **Censo**")
     if os.path.exists(LOGO_SIDEBAR):
         st.sidebar.image(LOGO_SIDEBAR, use_container_width=True)
     else:
@@ -598,8 +634,22 @@ def formulario_registro():
                 "España", "Japón", "Italia", "Nueva Zelanda", "Otro"
             ])
             ciudad = st.text_input("Ciudad *", placeholder="Ej: Caracas")
-            ubicacion_geo = st.text_input("Ubicación geográfica (descripción)", 
-                                          placeholder="Ej: Municipio Libertador, Distrito Capital")
+            
+            # MUNICIPIO DE SUCRE
+            st.markdown("#### 📍 Municipio del Estado Sucre")
+            municipio_seleccionado = st.selectbox(
+                "Municipio *",
+                [""] + list(MUNICIPIOS_SUCRE.keys())
+            )
+            
+            # PARROQUIA (depende del municipio seleccionado)
+            parroquia_seleccionada = ""
+            if municipio_seleccionado and municipio_seleccionado in MUNICIPIOS_SUCRE:
+                parroquias = MUNICIPIOS_SUCRE[municipio_seleccionado]
+                parroquia_seleccionada = st.selectbox(
+                    "Parroquia/Sector *",
+                    [""] + parroquias
+                )
         
         with col2:
             st.markdown("#### 🎓 Formación Profesional")
@@ -655,7 +705,8 @@ def formulario_registro():
         
         if submitted:
             campos_obligatorios = [nombre, correo, telefono, genero, pais, ciudad, 
-                                  profesion, nivel_academico, institucion, disponibilidad]
+                                  profesion, nivel_academico, institucion, disponibilidad,
+                                  municipio_seleccionado, parroquia_seleccionada]
             
             if "" in campos_obligatorios or None in campos_obligatorios:
                 st.error("❌ Por favor complete todos los campos obligatorios (*)")
@@ -669,7 +720,7 @@ def formulario_registro():
                     profesion, nivel_academico, institucion, anos_exp,
                     ", ".join(area_esp), ", ".join(idiomas), ", ".join(equipos),
                     misiones, disponibilidad, certificaciones,
-                    ubicacion_geo, comentarios
+                    municipio_seleccionado, parroquia_seleccionada, comentarios
                 )
                 
                 insertar_cientifico(datos)
@@ -691,6 +742,8 @@ def formulario_registro():
                 st.markdown(f"**Nombre:** {nombre}")
                 st.markdown(f"**Profesión:** {profesion}")
                 st.markdown(f"**Institución:** {institucion}")
+                st.markdown(f"**Municipio:** {municipio_seleccionado}")
+                st.markdown(f"**Parroquia:** {parroquia_seleccionada}")
                 if exito:
                     st.markdown(f"📧 *Notificación enviada al administrador*")
                 else:
@@ -730,7 +783,7 @@ def ver_registros():
         st.markdown(f"**Mostrando {len(df_filtrado)} de {len(df)} registros**")
         
         columnas_mostrar = ['codigo', 'nombre_completo', 'profesion', 'institucion', 
-                           'pais', 'ciudad', 'nivel_academico', 'anos_experiencia', 'disponibilidad']
+                           'pais', 'ciudad', 'municipio', 'parroquia', 'nivel_academico', 'anos_experiencia', 'disponibilidad']
         st.dataframe(df_filtrado[columnas_mostrar], use_container_width=True, hide_index=True)
         
         csv = df_filtrado.to_csv(index=False).encode('utf-8')
@@ -768,6 +821,14 @@ def editar_registro():
                     institucion = st.text_input("Institución", value=row[12])
                     pais = st.text_input("País", value=row[8])
                     ciudad = st.text_input("Ciudad", value=row[9])
+                    
+                    # Municipio
+                    municipio_actual = row[20] if row[20] else ""
+                    municipio_seleccionado = st.selectbox(
+                        "Municipio",
+                        [""] + list(MUNICIPIOS_SUCRE.keys()),
+                        index=([""] + list(MUNICIPIOS_SUCRE.keys())).index(municipio_actual) if municipio_actual in MUNICIPIOS_SUCRE else 0
+                    )
                 
                 with col2:
                     nivel_academico = st.selectbox("Nivel académico", 
@@ -782,8 +843,20 @@ def editar_registro():
                     disponibilidad = st.selectbox("Disponibilidad de tiempo",
                         disponibilidad_opciones,
                         index=disponibilidad_opciones.index(row[18]) if row[18] in disponibilidad_opciones else 0)
+                    
+                    # Parroquia
+                    parroquia_actual = row[21] if row[21] else ""
+                    if municipio_seleccionado and municipio_seleccionado in MUNICIPIOS_SUCRE:
+                        parroquias = MUNICIPIOS_SUCRE[municipio_seleccionado]
+                        parroquia_seleccionada = st.selectbox(
+                            "Parroquia",
+                            [""] + parroquias,
+                            index=([""] + parroquias).index(parroquia_actual) if parroquia_actual in parroquias else 0
+                        )
+                    else:
+                        parroquia_seleccionada = st.text_input("Parroquia", value=parroquia_actual)
                 
-                comentarios = st.text_area("Comentarios", value=row[21] if row[21] else "")
+                comentarios = st.text_area("Comentarios", value=row[22] if row[22] else "")
                 
                 submitted = st.form_submit_button("💾 Actualizar Registro")
                 
@@ -791,7 +864,7 @@ def editar_registro():
                     datos = (nombre, correo, telefono, row[6], row[7], pais, ciudad,
                             profesion, nivel_academico, institucion, anos_exp,
                             row[14], row[15], row[16], row[17], disponibilidad,
-                            row[19], row[20], comentarios)
+                            row[19], municipio_seleccionado, parroquia_seleccionada, comentarios)
                     actualizar_cientifico(codigo, datos)
                     st.success(f"✅ Registro {codigo} actualizado correctamente.")
 
@@ -823,10 +896,10 @@ def eliminar_registro():
             else:
                 st.error("❌ Debes escribir ELIMINAR para confirmar.")
 
-# ==================== MAPA SIN COORDENADAS GPS ====================
+# ==================== MAPA ====================
 def mostrar_mapa():
     st.markdown("### 🗺️ Mapa de Ubicaciones de Científicos")
-    st.info("ℹ️ El mapa muestra las ubicaciones basadas en la ciudad y país registrados.")
+    st.info("ℹ️ El mapa muestra las ubicaciones basadas en el municipio del estado Sucre.")
     
     df = obtener_todos()
     
@@ -834,38 +907,66 @@ def mostrar_mapa():
         st.info("📭 No hay registros para mostrar.")
         return
     
-    # Mapa centrado en Venezuela
-    m = folium.Map(location=[10.4806, -66.9036], zoom_start=6)
+    # Mapa centrado en el estado Sucre
+    m = folium.Map(location=[10.5, -63.2], zoom_start=8)
     
-    # Colores por país para diferenciar
-    colores_paises = {
-        'Venezuela': 'red',
-        'Colombia': 'blue',
-        'Ecuador': 'green',
-        'Perú': 'orange',
-        'Chile': 'purple',
-        'Argentina': 'pink',
-        'Brasil': 'yellow',
-        'Bolivia': 'cadetblue',
-        'México': 'lightred',
-        'Estados Unidos': 'darkblue'
+    # Coordenadas aproximadas de los municipios de Sucre
+    coordenadas_municipios = {
+        "Andrés Eloy Blanco (Casanay)": [10.4, -63.5],
+        "Andrés Mata (San José de Areocuar)": [10.3, -63.8],
+        "Arismendi (Río Caribe)": [10.7, -63.1],
+        "Benítez (El Pilar)": [10.2, -63.6],
+        "Bermúdez (Carúpano)": [10.7, -63.2],
+        "Bolívar (Marigüitar)": [10.5, -63.8],
+        "Cajigal (Yaguaraparo)": [10.6, -63.0],
+        "Cruz Salmerón Acosta (Araya)": [10.6, -64.6],
+        "Libertador (Tunapuy)": [10.4, -63.1],
+        "Mariño (Irapa)": [10.6, -62.6],
+        "Mejía (San Antonio del Golfo)": [10.8, -62.3],
+        "Montes (Cumanacoa)": [10.3, -63.9],
+        "Ribero (Cariaco)": [10.3, -63.3],
+        "Sucre (Cumaná)": [10.5, -64.2],
+        "Valdez (Güiria)": [10.6, -62.3]
+    }
+    
+    colores_municipios = {
+        "Andrés Eloy Blanco (Casanay)": "red",
+        "Andrés Mata (San José de Areocuar)": "blue",
+        "Arismendi (Río Caribe)": "green",
+        "Benítez (El Pilar)": "orange",
+        "Bermúdez (Carúpano)": "purple",
+        "Bolívar (Marigüitar)": "pink",
+        "Cajigal (Yaguaraparo)": "cadetblue",
+        "Cruz Salmerón Acosta (Araya)": "lightred",
+        "Libertador (Tunapuy)": "darkblue",
+        "Mariño (Irapa)": "darkgreen",
+        "Mejía (San Antonio del Golfo)": "darkpurple",
+        "Montes (Cumanacoa)": "darkred",
+        "Ribero (Cariaco)": "lightblue",
+        "Sucre (Cumaná)": "lightgray",
+        "Valdez (Güiria)": "black"
     }
     
     for _, row in df.iterrows():
-        color = colores_paises.get(row['pais'], 'gray')
-        popup_text = f"""
-        <b>{row['nombre_completo']}</b><br>
-        {row['profesion']}<br>
-        {row['institucion']}<br>
-        {row['pais']}, {row['ciudad']}<br>
-        <i>{row['area_especializacion']}</i>
-        """
-        folium.Marker(
-            location=[10.4806 + hash(row['ciudad']) % 100 * 0.01, -66.9036 + hash(row['ciudad']) % 100 * 0.01],
-            popup=folium.Popup(popup_text, max_width=300),
-            tooltip=f"{row['nombre_completo']} - {row['ciudad']}",
-            icon=folium.Icon(color=color, icon='info-sign')
-        ).add_to(m)
+        municipio = row['municipio']
+        if municipio and municipio in coordenadas_municipios:
+            coords = coordenadas_municipios[municipio]
+            color = colores_municipios.get(municipio, "gray")
+            
+            popup_text = f"""
+            <b>{row['nombre_completo']}</b><br>
+            {row['profesion']}<br>
+            {row['institucion']}<br>
+            <b>Municipio:</b> {municipio}<br>
+            <b>Parroquia:</b> {row['parroquia']}<br>
+            <i>{row['area_especializacion']}</i>
+            """
+            folium.Marker(
+                location=coords,
+                popup=folium.Popup(popup_text, max_width=300),
+                tooltip=f"{row['nombre_completo']}",
+                icon=folium.Icon(color=color, icon='info-sign')
+            ).add_to(m)
     
     st_folium(m, width=700, height=500)
     
@@ -886,7 +987,7 @@ def estadisticas():
     with col_m1:
         st.metric("Total de científicos", len(df))
     with col_m2:
-        st.metric("Países representados", df['pais'].nunique())
+        st.metric("Municipios representados", df['municipio'].nunique())
     with col_m3:
         exp_prom = df['anos_experiencia'].mean()
         st.metric("Experiencia promedio (años)", f"{exp_prom:.1f}")
@@ -898,9 +999,9 @@ def estadisticas():
     
     col_g1, col_g2 = st.columns(2)
     with col_g1:
-        st.markdown("#### Distribución por país")
-        pais_counts = df['pais'].value_counts().head(10)
-        st.bar_chart(pais_counts)
+        st.markdown("#### Distribución por municipio")
+        municipio_counts = df['municipio'].value_counts().head(10)
+        st.bar_chart(municipio_counts)
     
     with col_g2:
         st.markdown("#### Distribución por nivel académico")
@@ -920,7 +1021,7 @@ def estadisticas():
         mision_counts = df['misiones_campo'].value_counts()
         st.bar_chart(mision_counts)
 
-# ==================== GENERAR PDF CORREGIDO ====================
+# ==================== GENERAR PDF ====================
 def generar_pdf():
     st.markdown("### 📄 Generar Reporte PDF")
     
