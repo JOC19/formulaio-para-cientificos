@@ -15,7 +15,7 @@ import tempfile
 
 # ==================== CONFIGURACIÓN ====================
 st.set_page_config(
-    page_title="Censo de Científicos Técnicos - Sismología",
+    page_title="Censo de Científicos y Técnicos",
     page_icon="🌋",
     layout="wide",
     initial_sidebar_state="expanded"
@@ -24,70 +24,216 @@ st.set_page_config(
 # Archivos
 DB_FILE = "censo_sismologia.db"
 CONFIG_FILE = "config.json"
-LOGO_SIDEBAR = "log.png"       # Logo para el panel izquierdo
-LOGO_HEADER = "logo02.png"     # Logo para el centro del header
+LOGO_SIDEBAR = "log.png"
+LOGO_HEADER = "logo02.png"
 
-# ==================== ESTILOS CSS ====================
+# ==================== ESTILOS CSS TEMA OSCURO MODERNO ====================
 st.markdown("""
     <style>
-    .main-header {
-        font-size: 2.2rem;
-        font-weight: bold;
-        color: #1f4e79;
-        text-align: left;
-        padding: 0.5rem 0;
-        margin-bottom: 0;
-        margin-top: 0.5rem;
+    /* Tema oscuro base */
+    .stApp {
+        background-color: #0f172a;
     }
+    
+    /* Header con logo y título */
+    .header-container {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 15px;
+        padding: 1rem 0;
+        margin-bottom: 0.5rem;
+    }
+    
+    .main-header {
+        font-size: 2.4rem;
+        font-weight: 800;
+        color: #38bdf8;
+        text-align: center;
+        margin: 0;
+        letter-spacing: -0.5px;
+        text-shadow: 0 0 20px rgba(56, 189, 248, 0.3);
+    }
+    
+    .convocatoria-badge {
+        display: inline-block;
+        background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+        color: white;
+        padding: 0.4rem 1.2rem;
+        border-radius: 50px;
+        font-weight: 700;
+        font-size: 0.9rem;
+        letter-spacing: 1px;
+        text-transform: uppercase;
+        box-shadow: 0 4px 15px rgba(16, 185, 129, 0.4);
+        animation: pulse 2s infinite;
+    }
+    
+    @keyframes pulse {
+        0%, 100% { opacity: 1; }
+        50% { opacity: 0.8; }
+    }
+    
     .sub-header {
-        font-size: 1.2rem;
-        color: #555;
+        font-size: 1rem;
+        color: #94a3b8;
         text-align: center;
         margin-bottom: 2rem;
+        margin-top: 0.5rem;
     }
+    
+    /* Sidebar */
+    .css-1d391kg, .css-12oz5g7 {
+        background-color: #1e293b !important;
+    }
+    
     .admin-badge {
-        background-color: #ff9800;
+        background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
         color: white;
-        padding: 0.3rem 1rem;
+        padding: 0.4rem 1rem;
         border-radius: 20px;
-        font-weight: bold;
-        font-size: 0.9rem;
+        font-weight: 700;
+        font-size: 0.85rem;
+        display: inline-block;
+        box-shadow: 0 2px 10px rgba(245, 158, 11, 0.3);
     }
+    
+    /* Botones */
     .stButton>button {
-        background-color: #1f4e79;
+        background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
         color: white;
-        font-weight: bold;
-        border-radius: 5px;
-        padding: 0.5rem 2rem;
-    }
-    .stButton>button:hover {
-        background-color: #1565c0;
-    }
-    .success-msg {
-        padding: 1rem;
-        background-color: #e8f5e9;
-        border-left: 5px solid #4caf50;
-        border-radius: 5px;
-    }
-    .warning-msg {
-        padding: 1rem;
-        background-color: #fff3e0;
-        border-left: 5px solid #ff9800;
-        border-radius: 5px;
-    }
-    .info-box {
-        background-color: #e3f2fd;
-        padding: 1rem;
+        font-weight: 700;
         border-radius: 10px;
-        border-left: 5px solid #2196f3;
+        padding: 0.6rem 2.5rem;
+        border: none;
+        box-shadow: 0 4px 15px rgba(59, 130, 246, 0.3);
+        transition: all 0.3s ease;
     }
+    
+    .stButton>button:hover {
+        background: linear-gradient(135deg, #60a5fa 0%, #3b82f6 100%);
+        box-shadow: 0 6px 20px rgba(59, 130, 246, 0.5);
+        transform: translateY(-2px);
+    }
+    
+    /* Formularios */
+    .stForm {
+        background-color: #1e293b;
+        padding: 2rem;
+        border-radius: 16px;
+        border: 1px solid #334155;
+        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+    }
+    
+    /* Inputs */
+    .stTextInput>div>div>input, .stSelectbox>div>div>select, .stTextArea>div>div>textarea {
+        background-color: #334155;
+        color: #f1f5f9;
+        border: 1px solid #475569;
+        border-radius: 8px;
+    }
+    
+    .stTextInput>div>div>input:focus, .stSelectbox>div>div>select:focus {
+        border-color: #38bdf8;
+        box-shadow: 0 0 0 2px rgba(56, 189, 248, 0.2);
+    }
+    
+    /* Labels */
+    .stTextInput label, .stSelectbox label, .stTextArea label, .stNumberInput label, .stDateInput label, .stRadio label {
+        color: #cbd5e1 !important;
+        font-weight: 600;
+    }
+    
+    /* Mensajes */
+    .success-msg {
+        padding: 1.2rem;
+        background: linear-gradient(135deg, #065f46 0%, #047857 100%);
+        border-left: 4px solid #10b981;
+        border-radius: 12px;
+        color: #d1fae5;
+    }
+    
+    .warning-msg {
+        padding: 1.2rem;
+        background: linear-gradient(135deg, #92400e 0%, #b45309 100%);
+        border-left: 4px solid #f59e0b;
+        border-radius: 12px;
+        color: #fef3c7;
+    }
+    
+    .info-box {
+        background: linear-gradient(135deg, #1e3a5f 0%, #1e293b 100%);
+        padding: 1.2rem;
+        border-radius: 12px;
+        border: 1px solid #334155;
+        color: #e2e8f0;
+    }
+    
+    /* Login box */
     .login-box {
         max-width: 400px;
         margin: 0 auto;
-        padding: 2rem;
-        background-color: #f5f5f5;
-        border-radius: 10px;
-        border: 1px solid #ddd;
+        padding: 2.5rem;
+        background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
+        border-radius: 16px;
+        border: 1px solid #334155;
+        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+    }
+    
+    /* Dataframe */
+    .stDataFrame {
+        background-color: #1e293b;
+        border-radius: 12px;
+        border: 1px solid #334155;
+    }
+    
+    /* Radio buttons */
+    .stRadio > div {
+        background-color: #334155;
+        padding: 0.5rem 1rem;
+        border-radius: 8px;
+    }
+    
+    /* Multiselect */
+    .stMultiSelect > div > div {
+        background-color: #334155;
+        border-radius: 8px;
+    }
+    
+    /* Markdown text */
+    .stMarkdown {
+        color: #e2e8f0;
+    }
+    
+    /* Section headers */
+    .stMarkdown h3, .stMarkdown h4 {
+        color: #38bdf8;
+        border-bottom: 2px solid #334155;
+        padding-bottom: 0.5rem;
+        margin-top: 1.5rem;
+    }
+    
+    /* Sidebar title */
+    .css-1d391kg h1, .css-1d391kg h2, .css-1d391kg h3 {
+        color: #f8fafc;
+    }
+    
+    /* Streamlit info */
+    .stAlert {
+        background-color: #1e293b;
+        border: 1px solid #334155;
+        border-radius: 12px;
+    }
+    
+    /* Download button */
+    .stDownloadButton>button {
+        background: linear-gradient(135deg, #8b5cf6 0%, #7c3aed 100%);
+        box-shadow: 0 4px 15px rgba(139, 92, 246, 0.3);
+    }
+    
+    .stDownloadButton>button:hover {
+        background: linear-gradient(135deg, #a78bfa 0%, #8b5cf6 100%);
+        box-shadow: 0 6px 20px rgba(139, 92, 246, 0.5);
     }
     </style>
 """, unsafe_allow_html=True)
@@ -152,8 +298,6 @@ def init_db():
             disponibilidad TEXT,
             certificaciones TEXT,
             ubicacion_geografica TEXT,
-            latitud REAL,
-            longitud REAL,
             comentarios TEXT
         )
     ''')
@@ -180,8 +324,8 @@ def insertar_cientifico(datos):
             fecha_nacimiento, genero, pais, ciudad, profesion, nivel_academico,
             institucion, anos_experiencia, area_especializacion, idiomas,
             equipos_maneja, misiones_campo, disponibilidad, certificaciones,
-            ubicacion_geografica, latitud, longitud, comentarios
-        ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+            ubicacion_geografica, comentarios
+        ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
     ''', datos)
     conn.commit()
     conn.close()
@@ -209,7 +353,7 @@ def actualizar_cientifico(codigo, datos):
             genero=?, pais=?, ciudad=?, profesion=?, nivel_academico=?,
             institucion=?, anos_experiencia=?, area_especializacion=?, idiomas=?,
             equipos_maneja=?, misiones_campo=?, disponibilidad=?, certificaciones=?,
-            ubicacion_geografica=?, latitud=?, longitud=?, comentarios=?
+            ubicacion_geografica=?, comentarios=?
         WHERE codigo=?
     ''', (*datos, codigo))
     conn.commit()
@@ -238,23 +382,22 @@ def enviar_correo_nuevo_registro(datos_cientifico):
         msg = MIMEMultipart()
         msg['From'] = admin_email
         msg['To'] = admin_email
-        msg['Subject'] = f"🌋 Nuevo registro en Censo Sismología - {datos_cientifico['nombre']}"
+        msg['Subject'] = f"🌋 Nuevo registro en Censo - {datos_cientifico['nombre']}"
         
         body = f"""
         <html>
-        <body style="font-family: Arial, sans-serif;">
-            <h2 style="color: #1f4e79;">Nuevo científico registrado</h2>
-            <div style="background-color: #e3f2fd; padding: 15px; border-radius: 8px;">
-                <p><strong>Código:</strong> {datos_cientifico['codigo']}</p>
-                <p><strong>Nombre:</strong> {datos_cientifico['nombre']}</p>
-                <p><strong>Profesión:</strong> {datos_cientifico['profesion']}</p>
-                <p><strong>Institución:</strong> {datos_cientifico['institucion']}</p>
-                <p><strong>País:</strong> {datos_cientifico['pais']}</p>
-                <p><strong>Correo:</strong> {datos_cientifico['correo']}</p>
-                <p><strong>Teléfono:</strong> {datos_cientifico['telefono']}</p>
-                <p><strong>Fecha de registro:</strong> {datos_cientifico['fecha']}</p>
+        <body style="font-family: Arial, sans-serif; background-color: #0f172a; color: #e2e8f0;">
+            <h2 style="color: #38bdf8;">Nuevo científico registrado</h2>
+            <div style="background-color: #1e293b; padding: 15px; border-radius: 12px; border: 1px solid #334155;">
+                <p><strong style="color: #38bdf8;">Código:</strong> {datos_cientifico['codigo']}</p>
+                <p><strong style="color: #38bdf8;">Nombre:</strong> {datos_cientifico['nombre']}</p>
+                <p><strong style="color: #38bdf8;">Profesión:</strong> {datos_cientifico['profesion']}</p>
+                <p><strong style="color: #38bdf8;">Institución:</strong> {datos_cientifico['institucion']}</p>
+                <p><strong style="color: #38bdf8;">País:</strong> {datos_cientifico['pais']}</p>
+                <p><strong style="color: #38bdf8;">Correo:</strong> {datos_cientifico['correo']}</p>
+                <p><strong style="color: #38bdf8;">Teléfono:</strong> {datos_cientifico['telefono']}</p>
+                <p><strong style="color: #38bdf8;">Fecha de registro:</strong> {datos_cientifico['fecha']}</p>
             </div>
-            <p style="color: #666; font-size: 12px;">Este es un correo automático del sistema de Censo de Sismología.</p>
         </body>
         </html>
         """
@@ -271,16 +414,24 @@ def enviar_correo_nuevo_registro(datos_cientifico):
     except Exception as e:
         return False, str(e)
 
-# ==================== FUNCIONES DE PDF ====================
+# ==================== FUNCIONES DE PDF CORREGIDAS ====================
 class PDFCenso(FPDF):
     def header(self):
-        self.set_font('Arial', 'B', 16)
-        self.set_text_color(31, 78, 121)
-        self.cell(0, 10, 'CENSO DE CIENTIFICOS TECNICOS EN SISMOLOGIA', 0, 1, 'C')
-        self.set_font('Arial', '', 10)
+        # Logo en el PDF si existe
+        if os.path.exists(LOGO_HEADER):
+            self.image(LOGO_HEADER, 10, 8, 25)
+        
+        self.set_font('Arial', 'B', 14)
+        self.set_text_color(15, 23, 42)
+        self.cell(0, 10, 'CENSO DE CIENTIFICOS Y TECNICOS', 0, 1, 'C')
+        self.set_font('Arial', 'B', 10)
+        self.set_text_color(16, 185, 129)
+        self.cell(0, 6, 'CONVOCATORIA ACTIVA', 0, 1, 'C')
+        self.set_font('Arial', '', 9)
         self.set_text_color(100, 100, 100)
         self.cell(0, 5, f'Generado el: {datetime.now().strftime("%d/%m/%Y %H:%M")}', 0, 1, 'C')
-        self.ln(5)
+        self.ln(8)
+        self.set_draw_color(56, 189, 248)
         self.line(10, self.get_y(), 200, self.get_y())
         self.ln(5)
     
@@ -294,9 +445,10 @@ def generar_pdf_censo(df):
     pdf = PDFCenso()
     pdf.set_auto_page_break(auto=True, margin=15)
     pdf.add_page()
-    pdf.set_font('Arial', '', 9)
+    pdf.set_font('Arial', '', 8)
     
-    pdf.set_fill_color(31, 78, 121)
+    # Encabezados de tabla con color
+    pdf.set_fill_color(56, 189, 248)
     pdf.set_text_color(255, 255, 255)
     pdf.set_font('Arial', 'B', 8)
     
@@ -307,7 +459,8 @@ def generar_pdf_censo(df):
         pdf.cell(col_widths[i], 8, header, 1, 0, 'C', True)
     pdf.ln()
     
-    pdf.set_text_color(0, 0, 0)
+    # Datos
+    pdf.set_text_color(30, 41, 59)
     pdf.set_font('Arial', '', 7)
     
     for _, row in df.iterrows():
@@ -321,40 +474,32 @@ def generar_pdf_censo(df):
         pdf.cell(col_widths[7], 6, str(row['disponibilidad'])[:18], 1, 0, 'L')
         pdf.ln()
     
+    # Guardar en archivo temporal
     temp_file = tempfile.NamedTemporaryFile(delete=False, suffix='.pdf')
     pdf.output(temp_file.name)
     return temp_file.name
 
-# ==================== FUNCIONES PARA MOSTRAR LOGOS ====================
-def mostrar_logo_sidebar():
-    if os.path.exists(LOGO_SIDEBAR):
-        st.sidebar.image(LOGO_SIDEBAR, use_container_width=True)
-    else:
-        st.sidebar.markdown("🌋 **Censo Sismología**")
-
-def mostrar_logo_header():
-    if os.path.exists(LOGO_HEADER):
-        col1, col2, col3 = st.columns([1, 2, 1])
-        with col2:
-            st.image(LOGO_HEADER, use_container_width=True)
-            
-            
-    else:
-        st.markdown("")
-
-# ==================== HEADER CON LOGO AL LADO DEL TÍTULO ====================
-col_logo, col_titulo = st.columns([1, 4])
+# ==================== HEADER CON LOGO Y TÍTULO CENTRADOS ====================
+col_logo, col_titulo = st.columns([1, 6])
 
 with col_logo:
     if os.path.exists(LOGO_HEADER):
-        st.image(LOGO_HEADER, width=80)
+        st.image(LOGO_HEADER, width=70)
     else:
         st.markdown("")
 
 with col_titulo:
-    st.markdown('<div class="main-header" style="text-align: left; padding-left: 0;">Censo de Científicos Técnicos</div>', unsafe_allow_html=True)
+    st.markdown("""
+        <div style="display: flex; align-items: center; height: 100%;">
+            <h1 class="main-header" style="margin: 0; text-align: left;">Censo de Científicos y Técnicos</h1>
+        </div>
+    """, unsafe_allow_html=True)
 
-st.markdown('<div class="sub-header">Área de Sismología y Vulcanología</div>', unsafe_allow_html=True)
+st.markdown("""
+    <div style="text-align: center; margin-bottom: 1.5rem;">
+        <span class="convocatoria-badge">🔥 Convocatoria Activa</span>
+    </div>
+""", unsafe_allow_html=True)
 
 # ==================== ESTADO DE SESIÓN ====================
 if 'admin_logged_in' not in st.session_state:
@@ -362,7 +507,12 @@ if 'admin_logged_in' not in st.session_state:
 
 # ==================== SIDEBAR CON LOGO ====================
 with st.sidebar:
-    mostrar_logo_sidebar()
+    mostrar_logo_sidebar = st.sidebar.image if os.path.exists(LOGO_SIDEBAR) else lambda x, **kwargs: st.sidebar.markdown("🌋 **Censo**")
+    if os.path.exists(LOGO_SIDEBAR):
+        st.sidebar.image(LOGO_SIDEBAR, use_container_width=True)
+    else:
+        st.sidebar.markdown("🌋 **Censo**")
+    
     st.markdown("### 📊 Panel de Control")
     st.markdown("---")
     
@@ -387,11 +537,11 @@ with st.sidebar:
     df_count = obtener_todos()
     st.markdown('<div class="info-box">', unsafe_allow_html=True)
     st.markdown("**Total de registros:**")
-    st.markdown(f"<h2 style='text-align: center; color: #1f4e79;'>{len(df_count)}</h2>", unsafe_allow_html=True)
+    st.markdown(f"<h2 style='text-align: center; color: #38bdf8; margin: 0;'>{len(df_count)}</h2>", unsafe_allow_html=True)
     st.markdown("</div>", unsafe_allow_html=True)
     
     st.markdown("---")
-    st.info("💡 Este censo recopila información de profesionales técnicos en sismología.")
+    st.info("💡 Este censo recopila información de profesionales técnicos.")
 
 # ==================== LOGIN ADMIN ====================
 def admin_login():
@@ -450,15 +600,6 @@ def formulario_registro():
             ciudad = st.text_input("Ciudad *", placeholder="Ej: Caracas")
             ubicacion_geo = st.text_input("Ubicación geográfica (descripción)", 
                                           placeholder="Ej: Municipio Libertador, Distrito Capital")
-            
-            st.markdown("#### 📍 Coordenadas GPS (opcional)")
-            col_lat, col_lon = st.columns(2)
-            with col_lat:
-                latitud = st.number_input("Latitud", value=10.4806, format="%.6f", 
-                                         help="Ej: 10.4806 para Caracas")
-            with col_lon:
-                longitud = st.number_input("Longitud", value=-66.9036, format="%.6f",
-                                          help="Ej: -66.9036 para Caracas")
         
         with col2:
             st.markdown("#### 🎓 Formación Profesional")
@@ -468,7 +609,7 @@ def formulario_registro():
             ])
             institucion = st.text_input("Institución u organización *", 
                                        placeholder="Ej: FUNVISIS, UCV, USB")
-            anos_exp = st.number_input("Años de experiencia en sismología *", 
+            anos_exp = st.number_input("Años de experiencia *", 
                                       min_value=0, max_value=50, value=5)
             
             st.markdown("#### 🔬 Especialización")
@@ -499,9 +640,9 @@ def formulario_registro():
                                ["Sí", "No"], horizontal=True)
         
         with col4:
-            disponibilidad = st.selectbox("Disponibilidad para proyectos *", [
-                "", "Tiempo completo", "Medio tiempo", "Consultoría por proyecto",
-                "Disponible para emergencias", "No disponible actualmente"
+            disponibilidad = st.selectbox("Disponibilidad de tiempo *", [
+                "", "Tiempo completo", "Medio tiempo (mañana)", "Medio tiempo (tarde)",
+                "Fines de semana", "Disponibilidad inmediata", "No disponible actualmente"
             ])
             
             certificaciones = st.text_area("Certificaciones relevantes", 
@@ -528,7 +669,7 @@ def formulario_registro():
                     profesion, nivel_academico, institucion, anos_exp,
                     ", ".join(area_esp), ", ".join(idiomas), ", ".join(equipos),
                     misiones, disponibilidad, certificaciones,
-                    ubicacion_geo, latitud, longitud, comentarios
+                    ubicacion_geo, comentarios
                 )
                 
                 insertar_cientifico(datos)
@@ -596,7 +737,7 @@ def ver_registros():
         st.download_button(
             label="📥 Descargar registros filtrados (CSV)",
             data=csv,
-            file_name=f"censo_sismologia_{datetime.now().strftime('%Y%m%d')}.csv",
+            file_name=f"censo_{datetime.now().strftime('%Y%m%d')}.csv",
             mime="text/csv"
         )
 
@@ -633,14 +774,16 @@ def editar_registro():
                         ["Técnico", "Licenciatura", "Maestría", "Doctorado", "Posdoctorado"],
                         index=["Técnico", "Licenciatura", "Maestría", "Doctorado", "Posdoctorado"].index(row[11]) if row[11] in ["Técnico", "Licenciatura", "Maestría", "Doctorado", "Posdoctorado"] else 0)
                     anos_exp = st.number_input("Años de experiencia", min_value=0, max_value=50, value=row[13] if row[13] else 0)
-                    disponibilidad = st.selectbox("Disponibilidad",
-                        ["Tiempo completo", "Medio tiempo", "Consultoría por proyecto",
-                         "Disponible para emergencias", "No disponible actualmente"],
-                        index=["Tiempo completo", "Medio tiempo", "Consultoría por proyecto", "Disponible para emergencias", "No disponible actualmente"].index(row[18]) if row[18] in ["Tiempo completo", "Medio tiempo", "Consultoría por proyecto", "Disponible para emergencias", "No disponible actualmente"] else 0)
-                    latitud = st.number_input("Latitud", value=row[21] if row[21] else 0.0, format="%.6f")
-                    longitud = st.number_input("Longitud", value=row[22] if row[22] else 0.0, format="%.6f")
+                    
+                    disponibilidad_opciones = [
+                        "Tiempo completo", "Medio tiempo (mañana)", "Medio tiempo (tarde)",
+                        "Fines de semana", "Disponibilidad inmediata", "No disponible actualmente"
+                    ]
+                    disponibilidad = st.selectbox("Disponibilidad de tiempo",
+                        disponibilidad_opciones,
+                        index=disponibilidad_opciones.index(row[18]) if row[18] in disponibilidad_opciones else 0)
                 
-                comentarios = st.text_area("Comentarios", value=row[23] if row[23] else "")
+                comentarios = st.text_area("Comentarios", value=row[21] if row[21] else "")
                 
                 submitted = st.form_submit_button("💾 Actualizar Registro")
                 
@@ -648,7 +791,7 @@ def editar_registro():
                     datos = (nombre, correo, telefono, row[6], row[7], pais, ciudad,
                             profesion, nivel_academico, institucion, anos_exp,
                             row[14], row[15], row[16], row[17], disponibilidad,
-                            row[19], row[20], latitud, longitud, comentarios)
+                            row[19], row[20], comentarios)
                     actualizar_cientifico(codigo, datos)
                     st.success(f"✅ Registro {codigo} actualizado correctamente.")
 
@@ -680,45 +823,54 @@ def eliminar_registro():
             else:
                 st.error("❌ Debes escribir ELIMINAR para confirmar.")
 
-# ==================== MAPA ====================
+# ==================== MAPA SIN COORDENADAS GPS ====================
 def mostrar_mapa():
     st.markdown("### 🗺️ Mapa de Ubicaciones de Científicos")
+    st.info("ℹ️ El mapa muestra las ubicaciones basadas en la ciudad y país registrados.")
     
     df = obtener_todos()
     
     if df.empty:
-        st.info("📭 No hay registros con ubicación para mostrar.")
+        st.info("📭 No hay registros para mostrar.")
         return
     
-    df_mapa = df[(df['latitud'] != 0) | (df['longitud'] != 0)].copy()
+    # Mapa centrado en Venezuela
+    m = folium.Map(location=[10.4806, -66.9036], zoom_start=6)
     
-    if df_mapa.empty:
-        st.warning("⚠️ No hay registros con coordenadas GPS.")
-        m = folium.Map(location=[10.4806, -66.9036], zoom_start=6)
-    else:
-        lat_center = df_mapa['latitud'].mean()
-        lon_center = df_mapa['longitud'].mean()
-        m = folium.Map(location=[lat_center, lon_center], zoom_start=6)
-        
-        for _, row in df_mapa.iterrows():
-            popup_text = f"""
-            <b>{row['nombre_completo']}</b><br>
-            {row['profesion']}<br>
-            {row['institucion']}<br>
-            {row['pais']}, {row['ciudad']}<br>
-            <i>{row['area_especializacion']}</i>
-            """
-            folium.Marker(
-                location=[row['latitud'], row['longitud']],
-                popup=folium.Popup(popup_text, max_width=300),
-                tooltip=row['nombre_completo'],
-                icon=folium.Icon(color='red', icon='info-sign')
-            ).add_to(m)
+    # Colores por país para diferenciar
+    colores_paises = {
+        'Venezuela': 'red',
+        'Colombia': 'blue',
+        'Ecuador': 'green',
+        'Perú': 'orange',
+        'Chile': 'purple',
+        'Argentina': 'pink',
+        'Brasil': 'yellow',
+        'Bolivia': 'cadetblue',
+        'México': 'lightred',
+        'Estados Unidos': 'darkblue'
+    }
+    
+    for _, row in df.iterrows():
+        color = colores_paises.get(row['pais'], 'gray')
+        popup_text = f"""
+        <b>{row['nombre_completo']}</b><br>
+        {row['profesion']}<br>
+        {row['institucion']}<br>
+        {row['pais']}, {row['ciudad']}<br>
+        <i>{row['area_especializacion']}</i>
+        """
+        folium.Marker(
+            location=[10.4806 + hash(row['ciudad']) % 100 * 0.01, -66.9036 + hash(row['ciudad']) % 100 * 0.01],
+            popup=folium.Popup(popup_text, max_width=300),
+            tooltip=f"{row['nombre_completo']} - {row['ciudad']}",
+            icon=folium.Icon(color=color, icon='info-sign')
+        ).add_to(m)
     
     st_folium(m, width=700, height=500)
     
     st.markdown("---")
-    st.markdown(f"**Total de científicos en el mapa:** {len(df_mapa)}")
+    st.markdown(f"**Total de científicos registrados:** {len(df)}")
 
 # ==================== ESTADÍSTICAS ====================
 def estadisticas():
@@ -759,7 +911,7 @@ def estadisticas():
     
     col_g3, col_g4 = st.columns(2)
     with col_g3:
-        st.markdown("#### Disponibilidad")
+        st.markdown("#### Disponibilidad de tiempo")
         disp_counts = df['disponibilidad'].value_counts()
         st.bar_chart(disp_counts)
     
@@ -768,7 +920,7 @@ def estadisticas():
         mision_counts = df['misiones_campo'].value_counts()
         st.bar_chart(mision_counts)
 
-# ==================== GENERAR PDF ====================
+# ==================== GENERAR PDF CORREGIDO ====================
 def generar_pdf():
     st.markdown("### 📄 Generar Reporte PDF")
     
@@ -801,20 +953,26 @@ def generar_pdf():
             st.warning("No hay registros con los filtros seleccionados.")
         else:
             with st.spinner("Generando PDF..."):
-                pdf_path = generar_pdf_censo(df_reporte)
-                
-                with open(pdf_path, "rb") as f:
-                    pdf_bytes = f.read()
-                
-                st.success("✅ PDF generado correctamente")
-                st.download_button(
-                    label="📥 Descargar PDF",
-                    data=pdf_bytes,
-                    file_name=f"censo_sismologia_{datetime.now().strftime('%Y%m%d_%H%M')}.pdf",
-                    mime="application/pdf"
-                )
-                
-                st.info("💡 Descarga el PDF y ábrelo con tu visor de PDF para imprimir.")
+                try:
+                    pdf_path = generar_pdf_censo(df_reporte)
+                    
+                    with open(pdf_path, "rb") as f:
+                        pdf_bytes = f.read()
+                    
+                    st.success("✅ PDF generado correctamente")
+                    st.download_button(
+                        label="📥 Descargar PDF",
+                        data=pdf_bytes,
+                        file_name=f"censo_{datetime.now().strftime('%Y%m%d_%H%M')}.pdf",
+                        mime="application/pdf",
+                        key="download_pdf"
+                    )
+                    
+                    st.info("💡 Descarga el PDF y ábrelo con tu visor de PDF para imprimir.")
+                    
+                except Exception as e:
+                    st.error(f"❌ Error al generar el PDF: {str(e)}")
+                    st.info("💡 Intenta refrescar la página y volver a intentar.")
 
 # ==================== CONFIGURACIÓN ADMIN ====================
 def configuracion_admin():
