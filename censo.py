@@ -27,7 +27,7 @@ CONFIG_FILE = "config.json"
 LOGO_SIDEBAR = "log.png"
 LOGO_HEADER = "logo02.png"
 
-# ==================== DATOS DE MUNICIPIOS Y PARROQUIAS DE SUCRE ====================
+# ==================== DATOS DE MUNICIPIOS DE SUCRE ====================
 MUNICIPIOS_SUCRE = {
     "Andrés Eloy Blanco (Casanay)": [
         "Casanay", "Andrés Eloy Blanco"
@@ -83,6 +83,23 @@ MUNICIPIOS_SUCRE = {
         "Flamingo", "Pascual Magallanes"
     ]
 }
+
+# ==================== TODAS LAS PARROQUIAS DE VENEZUELA ====================
+PARROQUIAS_VENEZUELA = [
+    "Mariño", "Rómulo Gallegos", "San José de Aerocuar", "Tavera Acosta", 
+    "Río Caribe", "Antonio José de Sucre", "El Morro de Puerto Santo", 
+    "Puerto Santo", "San Juan de las Galdonas", "El Pilar", "El Rincón", 
+    "General Francisco Antonio Vázquez", "Guaraúnos", "Tunapuicito", "Unión", 
+    "Santa Catalina", "Santa Rosa", "Santa Teresa", "Bolívar", "Maracapana", 
+    "Marigüitar", "Yaguaraparo", "El Paujil", "Libertador", "San Vicente de Paúl", 
+    "Araya", "Chacopata", "Manicuare", "Tunapuy", "Campo Elíseo", "Irapa", 
+    "Campo Claro", "Maraval", "San Antonio de Irapa", "Sosa", 
+    "San Antonio del Golfo", "Cumanacoa", "Arenas", "Aricagua", "Cocollar", 
+    "El Chaparral", "San Fernando", "San Lorenzo", "Cariaco", "Catuaro", 
+    "Santa Cruz", "Rendón", "Altagracia", "Ayacucho", "Gran Mariscal", 
+    "Raúl Leoni", "San Juan", "Santa Inés", "Valentín Valiente", "Güiria", 
+    "Bideau", "Cristóbal Colón", "Flamingo", "Pascual Magallanes"
+]
 
 # ==================== ESTILOS CSS TEMA OSCURO MODERNO ====================
 st.markdown("""
@@ -642,14 +659,12 @@ def formulario_registro():
                 [""] + list(MUNICIPIOS_SUCRE.keys())
             )
             
-            # PARROQUIA (depende del municipio seleccionado)
-            parroquia_seleccionada = ""
-            if municipio_seleccionado and municipio_seleccionado in MUNICIPIOS_SUCRE:
-                parroquias = MUNICIPIOS_SUCRE[municipio_seleccionado]
-                parroquia_seleccionada = st.selectbox(
-                    "Parroquia/Sector *",
-                    [""] + parroquias
-                )
+            # PARROQUIA DE VENEZUELA (menú independiente)
+            st.markdown("#### 🏘️ Parroquia")
+            parroquia_seleccionada = st.selectbox(
+                "Parroquia *",
+                [""] + PARROQUIAS_VENEZUELA
+            )
         
         with col2:
             st.markdown("#### 🎓 Formación Profesional")
@@ -829,6 +844,14 @@ def editar_registro():
                         [""] + list(MUNICIPIOS_SUCRE.keys()),
                         index=([""] + list(MUNICIPIOS_SUCRE.keys())).index(municipio_actual) if municipio_actual in MUNICIPIOS_SUCRE else 0
                     )
+                    
+                    # Parroquia (menú independiente con todas las parroquias)
+                    parroquia_actual = row[21] if row[21] else ""
+                    parroquia_seleccionada = st.selectbox(
+                        "Parroquia",
+                        [""] + PARROQUIAS_VENEZUELA,
+                        index=([""] + PARROQUIAS_VENEZUELA).index(parroquia_actual) if parroquia_actual in PARROQUIAS_VENEZUELA else 0
+                    )
                 
                 with col2:
                     nivel_academico = st.selectbox("Nivel académico", 
@@ -843,18 +866,6 @@ def editar_registro():
                     disponibilidad = st.selectbox("Disponibilidad de tiempo",
                         disponibilidad_opciones,
                         index=disponibilidad_opciones.index(row[18]) if row[18] in disponibilidad_opciones else 0)
-                    
-                    # Parroquia
-                    parroquia_actual = row[21] if row[21] else ""
-                    if municipio_seleccionado and municipio_seleccionado in MUNICIPIOS_SUCRE:
-                        parroquias = MUNICIPIOS_SUCRE[municipio_seleccionado]
-                        parroquia_seleccionada = st.selectbox(
-                            "Parroquia",
-                            [""] + parroquias,
-                            index=([""] + parroquias).index(parroquia_actual) if parroquia_actual in parroquias else 0
-                        )
-                    else:
-                        parroquia_seleccionada = st.text_input("Parroquia", value=parroquia_actual)
                 
                 comentarios = st.text_area("Comentarios", value=row[22] if row[22] else "")
                 
