@@ -101,12 +101,17 @@ PARROQUIAS_VENEZUELA = [
     "Bideau", "Cristóbal Colón", "Flamingo", "Pascual Magallanes"
 ]
 
-# ==================== ESTILOS CSS TEMA CLARO PROFESIONAL ====================
+# ==================== ESTILOS CSS COMPATIBLE CON MODO OSCURO ====================
 st.markdown("""
     <style>
-    /* Tema claro base */
+    /* ============================================
+       VARIABLES CSS - Se adaptan automáticamente
+       al tema claro/oscuro de Streamlit
+       ============================================ */
+    
+    /* Fondo principal - usa el color nativo de Streamlit */
     .stApp {
-        background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+        background: transparent !important;
     }
     
     /* Header con logo y título */
@@ -127,6 +132,13 @@ st.markdown("""
         margin: 0;
         letter-spacing: -0.5px;
         text-shadow: 0 2px 4px rgba(30, 64, 175, 0.1);
+    }
+    
+    /* En modo oscuro, ajustar color del título principal */
+    [data-testid="stAppViewContainer"] .st-emotion-cache-1v0mbdj .main-header,
+    [data-theme="dark"] .main-header {
+        color: #60a5fa;
+        text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
     }
     
     .convocatoria-badge {
@@ -156,8 +168,8 @@ st.markdown("""
         margin-top: 0.5rem;
     }
     
-    /* Sidebar */
-    .css-1d391kg, .css-12oz5g7 {
+    /* Sidebar - mantener el gradiente azul siempre */
+    [data-testid="stSidebar"] {
         background: linear-gradient(180deg, #1e3a5f 0%, #1e40af 100%) !important;
     }
     
@@ -190,117 +202,143 @@ st.markdown("""
         transform: translateY(-2px);
     }
     
-    /* Formularios */
+    /* ============================================
+       FORMULARIOS - Fondo transparente, usa el del tema
+       ============================================ */
     .stForm {
-        background: white;
+        background: rgba(128, 128, 128, 0.05);
         padding: 2rem;
         border-radius: 16px;
-        border: 1px solid #e2e8f0;
+        border: 1px solid rgba(128, 128, 128, 0.2);
         box-shadow: 0 8px 32px rgba(0, 0, 0, 0.08);
     }
     
-    /* Inputs */
-    .stTextInput>div>div>input, .stSelectbox>div>div>select, .stTextArea>div>div>textarea {
-        background-color: #f8fafc;
-        color: #1e293b;
-        border: 2px solid #e2e8f0;
+    /* En modo oscuro, ajustar bordes */
+    [data-theme="dark"] .stForm {
+        border-color: rgba(255, 255, 255, 0.1);
+        background: rgba(255, 255, 255, 0.03);
+    }
+    
+    /* Inputs - heredan colores del tema */
+    .stTextInput>div>div>input, 
+    .stSelectbox>div>div>select, 
+    .stTextArea>div>div>textarea {
         border-radius: 10px;
         padding: 0.5rem;
     }
     
-    .stTextInput>div>div>input:focus, .stSelectbox>div>div>select:focus {
+    .stTextInput>div>div>input:focus, 
+    .stSelectbox>div>div>select:focus {
         border-color: #3b82f6;
         box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.15);
     }
     
-    /* Labels */
-    .stTextInput label, .stSelectbox label, .stTextArea label, .stNumberInput label, .stDateInput label, .stRadio label {
-        color: #334155 !important;
+    /* Labels - heredan color del tema */
+    .stTextInput label, .stSelectbox label, .stTextArea label, 
+    .stNumberInput label, .stDateInput label, .stRadio label {
         font-weight: 600;
         font-size: 0.95rem;
     }
     
-    /* Mensajes */
+    /* ============================================
+       MENSAJES - Fondos semi-transparentes
+       ============================================ */
     .success-msg {
         padding: 1.2rem;
-        background: linear-gradient(135deg, #d1fae5 0%, #a7f3d0 100%);
+        background: rgba(16, 185, 129, 0.15);
         border-left: 5px solid #10b981;
         border-radius: 12px;
-        color: #065f46;
+    }
+    
+    [data-theme="dark"] .success-msg {
+        background: rgba(16, 185, 129, 0.1);
     }
     
     .warning-msg {
         padding: 1.2rem;
-        background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%);
+        background: rgba(245, 158, 11, 0.15);
         border-left: 5px solid #f59e0b;
         border-radius: 12px;
-        color: #92400e;
+    }
+    
+    [data-theme="dark"] .warning-msg {
+        background: rgba(245, 158, 11, 0.1);
     }
     
     .info-box {
-        background: linear-gradient(135deg, #dbeafe 0%, #bfdbfe 100%);
         padding: 1.2rem;
         border-radius: 12px;
-        border: 1px solid #93c5fd;
-        color: #1e40af;
+        border: 1px solid rgba(59, 130, 246, 0.3);
+        background: rgba(59, 130, 246, 0.1);
     }
     
-    /* Login box */
+    [data-theme="dark"] .info-box {
+        background: rgba(59, 130, 246, 0.08);
+        border-color: rgba(59, 130, 246, 0.2);
+    }
+    
+    /* ============================================
+       LOGIN BOX - Fondo semi-transparente
+       ============================================ */
     .login-box {
         max-width: 400px;
         margin: 0 auto;
         padding: 2.5rem;
-        background: white;
         border-radius: 16px;
-        border: 1px solid #e2e8f0;
+        border: 1px solid rgba(128, 128, 128, 0.2);
         box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+        background: rgba(128, 128, 128, 0.05);
     }
     
-    /* Dataframe */
+    [data-theme="dark"] .login-box {
+        border-color: rgba(255, 255, 255, 0.1);
+        background: rgba(255, 255, 255, 0.03);
+    }
+    
+    /* ============================================
+       DATAFRAME - Sin fondo blanco forzado
+       ============================================ */
     .stDataFrame {
-        background-color: white;
         border-radius: 12px;
-        border: 1px solid #e2e8f0;
+        border: 1px solid rgba(128, 128, 128, 0.2);
         box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
     }
     
     /* Radio buttons */
     .stRadio > div {
-        background-color: #f8fafc;
         padding: 0.5rem 1rem;
         border-radius: 10px;
-        border: 2px solid #e2e8f0;
+        border: 2px solid rgba(128, 128, 128, 0.2);
+        background: rgba(128, 128, 128, 0.05);
     }
     
     /* Multiselect */
     .stMultiSelect > div > div {
-        background-color: #f8fafc;
         border-radius: 10px;
-        border: 2px solid #e2e8f0;
+        border: 2px solid rgba(128, 128, 128, 0.2);
     }
     
-    /* Markdown text */
+    /* Markdown text - hereda color del tema */
     .stMarkdown {
-        color: #334155;
+        color: inherit;
     }
     
     /* Section headers */
     .stMarkdown h3, .stMarkdown h4 {
-        color: #1e40af;
-        border-bottom: 2px solid #e2e8f0;
+        border-bottom: 2px solid rgba(128, 128, 128, 0.2);
         padding-bottom: 0.5rem;
         margin-top: 1.5rem;
     }
     
     /* Sidebar title */
-    .css-1d391kg h1, .css-1d391kg h2, .css-1d391kg h3 {
+    [data-testid="stSidebar"] h1, 
+    [data-testid="stSidebar"] h2, 
+    [data-testid="stSidebar"] h3 {
         color: #f8fafc;
     }
     
-    /* Streamlit info */
+    /* Streamlit info - sin fondo blanco */
     .stAlert {
-        background-color: white;
-        border: 1px solid #e2e8f0;
         border-radius: 12px;
         box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
     }
@@ -316,20 +354,47 @@ st.markdown("""
         box-shadow: 0 6px 20px rgba(124, 58, 237, 0.5);
     }
     
-    /* Cards */
-    .css-1r6slb0 {
-        background-color: white;
+    /* Cards y métricas - sin fondo blanco forzado */
+    .css-1r6slb0, .css-1xarl3l {
         border-radius: 12px;
-        border: 1px solid #e2e8f0;
-        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+        border: 1px solid rgba(128, 128, 128, 0.2);
+        padding: 1rem;
     }
     
-    /* Metric */
-    .css-1xarl3l {
-        background: white;
-        border-radius: 12px;
-        border: 1px solid #e2e8f0;
-        padding: 1rem;
+    /* ============================================
+       FIX PARA CONTENEDORES INTERNOS DE STREAMLIT
+       ============================================ */
+    
+    /* Eliminar fondos blancos forzados en contenedores */
+    [data-testid="stVerticalBlock"] > [data-testid="stVerticalBlockBorderWrapper"] {
+        background: transparent !important;
+    }
+    
+    /* Asegurar que los bloques principales hereden el fondo */
+    [data-testid="stAppViewContainer"] {
+        background: transparent !important;
+    }
+    
+    /* Fix para bloques de contenido */
+    .block-container {
+        background: transparent !important;
+    }
+    
+    /* Fix para elementos de formulario en modo oscuro */
+    [data-testid="stForm"] {
+        background: transparent !important;
+    }
+    
+    /* Ajustar color de texto en modo oscuro para elementos custom */
+    [data-theme="dark"] .stMarkdown p,
+    [data-theme="dark"] .stMarkdown span,
+    [data-theme="dark"] .stTextInput label,
+    [data-theme="dark"] .stSelectbox label,
+    [data-theme="dark"] .stTextArea label,
+    [data-theme="dark"] .stNumberInput label,
+    [data-theme="dark"] .stDateInput label,
+    [data-theme="dark"] .stRadio label {
+        color: inherit !important;
     }
     </style>
 """, unsafe_allow_html=True)
@@ -483,17 +548,17 @@ def enviar_correo_nuevo_registro(datos_cientifico):
         
         body = f"""
         <html>
-        <body style="font-family: Arial, sans-serif; background-color: #f8fafc; color: #334155;">
+        <body style="font-family: Arial, sans-serif;">
             <h2 style="color: #1e40af;">Nuevo científico registrado</h2>
-            <div style="background-color: white; padding: 15px; border-radius: 12px; border: 1px solid #e2e8f0;">
-                <p><strong style="color: #1e40af;">Código:</strong> {datos_cientifico['codigo']}</p>
-                <p><strong style="color: #1e40af;">Nombre:</strong> {datos_cientifico['nombre']}</p>
-                <p><strong style="color: #1e40af;">Profesión:</strong> {datos_cientifico['profesion']}</p>
-                <p><strong style="color: #1e40af;">Institución:</strong> {datos_cientifico['institucion']}</p>
-                <p><strong style="color: #1e40af;">País:</strong> {datos_cientifico['pais']}</p>
-                <p><strong style="color: #1e40af;">Correo:</strong> {datos_cientifico['correo']}</p>
-                <p><strong style="color: #1e40af;">Teléfono:</strong> {datos_cientifico['telefono']}</p>
-                <p><strong style="color: #1e40af;">Fecha de registro:</strong> {datos_cientifico['fecha']}</p>
+            <div style="padding: 15px; border-radius: 12px; border: 1px solid #e2e8f0;">
+                <p><strong>Código:</strong> {datos_cientifico['codigo']}</p>
+                <p><strong>Nombre:</strong> {datos_cientifico['nombre']}</p>
+                <p><strong>Profesión:</strong> {datos_cientifico['profesion']}</p>
+                <p><strong>Institución:</strong> {datos_cientifico['institucion']}</p>
+                <p><strong>País:</strong> {datos_cientifico['pais']}</p>
+                <p><strong>Correo:</strong> {datos_cientifico['correo']}</p>
+                <p><strong>Teléfono:</strong> {datos_cientifico['telefono']}</p>
+                <p><strong>Fecha de registro:</strong> {datos_cientifico['fecha']}</p>
             </div>
         </body>
         </html>
