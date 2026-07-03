@@ -101,13 +101,15 @@ PARROQUIAS_VENEZUELA = [
     "Bideau", "Cristóbal Colón", "Flamingo", "Pascual Magallanes"
 ]
 
-# ==================== ESTILOS CSS TEMA OSCURO MODERNO ====================
+# ==================== ESTILOS CSS TEMA CLARO PROFESIONAL ====================
 st.markdown("""
     <style>
+    /* Tema claro base */
     .stApp {
-        background-color: #0f172a;
+        background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
     }
     
+    /* Header con logo y título */
     .header-container {
         display: flex;
         align-items: center;
@@ -120,42 +122,43 @@ st.markdown("""
     .main-header {
         font-size: 2.4rem;
         font-weight: 800;
-        color: #38bdf8;
+        color: #1e40af;
         text-align: center;
         margin: 0;
         letter-spacing: -0.5px;
-        text-shadow: 0 0 20px rgba(56, 189, 248, 0.3);
+        text-shadow: 0 2px 4px rgba(30, 64, 175, 0.1);
     }
     
     .convocatoria-badge {
         display: inline-block;
-        background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+        background: linear-gradient(135deg, #059669 0%, #047857 100%);
         color: white;
-        padding: 0.4rem 1.2rem;
+        padding: 0.5rem 1.5rem;
         border-radius: 50px;
         font-weight: 700;
-        font-size: 0.9rem;
+        font-size: 0.95rem;
         letter-spacing: 1px;
         text-transform: uppercase;
-        box-shadow: 0 4px 15px rgba(16, 185, 129, 0.4);
+        box-shadow: 0 4px 15px rgba(5, 150, 105, 0.3);
         animation: pulse 2s infinite;
     }
     
     @keyframes pulse {
-        0%, 100% { opacity: 1; }
-        50% { opacity: 0.8; }
+        0%, 100% { opacity: 1; transform: scale(1); }
+        50% { opacity: 0.9; transform: scale(1.02); }
     }
     
     .sub-header {
-        font-size: 1rem;
-        color: #94a3b8;
+        font-size: 1.1rem;
+        color: #64748b;
         text-align: center;
         margin-bottom: 2rem;
         margin-top: 0.5rem;
     }
     
+    /* Sidebar */
     .css-1d391kg, .css-12oz5g7 {
-        background-color: #1e293b !important;
+        background: linear-gradient(180deg, #1e3a5f 0%, #1e40af 100%) !important;
     }
     
     .admin-badge {
@@ -169,128 +172,164 @@ st.markdown("""
         box-shadow: 0 2px 10px rgba(245, 158, 11, 0.3);
     }
     
+    /* Botones */
     .stButton>button {
-        background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
+        background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%);
         color: white;
         font-weight: 700;
         border-radius: 10px;
         padding: 0.6rem 2.5rem;
         border: none;
-        box-shadow: 0 4px 15px rgba(59, 130, 246, 0.3);
+        box-shadow: 0 4px 15px rgba(37, 99, 235, 0.3);
         transition: all 0.3s ease;
     }
     
     .stButton>button:hover {
-        background: linear-gradient(135deg, #60a5fa 0%, #3b82f6 100%);
-        box-shadow: 0 6px 20px rgba(59, 130, 246, 0.5);
+        background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
+        box-shadow: 0 6px 20px rgba(37, 99, 235, 0.5);
         transform: translateY(-2px);
     }
     
+    /* Formularios */
     .stForm {
-        background-color: #1e293b;
+        background: white;
         padding: 2rem;
         border-radius: 16px;
-        border: 1px solid #334155;
-        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+        border: 1px solid #e2e8f0;
+        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.08);
     }
     
+    /* Inputs */
     .stTextInput>div>div>input, .stSelectbox>div>div>select, .stTextArea>div>div>textarea {
-        background-color: #334155;
-        color: #f1f5f9;
-        border: 1px solid #475569;
-        border-radius: 8px;
+        background-color: #f8fafc;
+        color: #1e293b;
+        border: 2px solid #e2e8f0;
+        border-radius: 10px;
+        padding: 0.5rem;
     }
     
     .stTextInput>div>div>input:focus, .stSelectbox>div>div>select:focus {
-        border-color: #38bdf8;
-        box-shadow: 0 0 0 2px rgba(56, 189, 248, 0.2);
+        border-color: #3b82f6;
+        box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.15);
     }
     
+    /* Labels */
     .stTextInput label, .stSelectbox label, .stTextArea label, .stNumberInput label, .stDateInput label, .stRadio label {
-        color: #cbd5e1 !important;
+        color: #334155 !important;
         font-weight: 600;
+        font-size: 0.95rem;
     }
     
+    /* Mensajes */
     .success-msg {
         padding: 1.2rem;
-        background: linear-gradient(135deg, #065f46 0%, #047857 100%);
-        border-left: 4px solid #10b981;
+        background: linear-gradient(135deg, #d1fae5 0%, #a7f3d0 100%);
+        border-left: 5px solid #10b981;
         border-radius: 12px;
-        color: #d1fae5;
+        color: #065f46;
     }
     
     .warning-msg {
         padding: 1.2rem;
-        background: linear-gradient(135deg, #92400e 0%, #b45309 100%);
-        border-left: 4px solid #f59e0b;
+        background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%);
+        border-left: 5px solid #f59e0b;
         border-radius: 12px;
-        color: #fef3c7;
+        color: #92400e;
     }
     
     .info-box {
-        background: linear-gradient(135deg, #1e3a5f 0%, #1e293b 100%);
+        background: linear-gradient(135deg, #dbeafe 0%, #bfdbfe 100%);
         padding: 1.2rem;
         border-radius: 12px;
-        border: 1px solid #334155;
-        color: #e2e8f0;
+        border: 1px solid #93c5fd;
+        color: #1e40af;
     }
     
+    /* Login box */
     .login-box {
         max-width: 400px;
         margin: 0 auto;
         padding: 2.5rem;
-        background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
+        background: white;
         border-radius: 16px;
-        border: 1px solid #334155;
-        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+        border: 1px solid #e2e8f0;
+        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
     }
     
+    /* Dataframe */
     .stDataFrame {
-        background-color: #1e293b;
+        background-color: white;
         border-radius: 12px;
-        border: 1px solid #334155;
+        border: 1px solid #e2e8f0;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
     }
     
+    /* Radio buttons */
     .stRadio > div {
-        background-color: #334155;
+        background-color: #f8fafc;
         padding: 0.5rem 1rem;
-        border-radius: 8px;
+        border-radius: 10px;
+        border: 2px solid #e2e8f0;
     }
     
+    /* Multiselect */
     .stMultiSelect > div > div {
-        background-color: #334155;
-        border-radius: 8px;
+        background-color: #f8fafc;
+        border-radius: 10px;
+        border: 2px solid #e2e8f0;
     }
     
+    /* Markdown text */
     .stMarkdown {
-        color: #e2e8f0;
+        color: #334155;
     }
     
+    /* Section headers */
     .stMarkdown h3, .stMarkdown h4 {
-        color: #38bdf8;
-        border-bottom: 2px solid #334155;
+        color: #1e40af;
+        border-bottom: 2px solid #e2e8f0;
         padding-bottom: 0.5rem;
         margin-top: 1.5rem;
     }
     
+    /* Sidebar title */
     .css-1d391kg h1, .css-1d391kg h2, .css-1d391kg h3 {
         color: #f8fafc;
     }
     
+    /* Streamlit info */
     .stAlert {
-        background-color: #1e293b;
-        border: 1px solid #334155;
+        background-color: white;
+        border: 1px solid #e2e8f0;
         border-radius: 12px;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
     }
     
+    /* Download button */
     .stDownloadButton>button {
-        background: linear-gradient(135deg, #8b5cf6 0%, #7c3aed 100%);
-        box-shadow: 0 4px 15px rgba(139, 92, 246, 0.3);
+        background: linear-gradient(135deg, #7c3aed 0%, #6d28d9 100%);
+        box-shadow: 0 4px 15px rgba(124, 58, 237, 0.3);
     }
     
     .stDownloadButton>button:hover {
-        background: linear-gradient(135deg, #a78bfa 0%, #8b5cf6 100%);
-        box-shadow: 0 6px 20px rgba(139, 92, 246, 0.5);
+        background: linear-gradient(135deg, #8b5cf6 0%, #7c3aed 100%);
+        box-shadow: 0 6px 20px rgba(124, 58, 237, 0.5);
+    }
+    
+    /* Cards */
+    .css-1r6slb0 {
+        background-color: white;
+        border-radius: 12px;
+        border: 1px solid #e2e8f0;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+    }
+    
+    /* Metric */
+    .css-1xarl3l {
+        background: white;
+        border-radius: 12px;
+        border: 1px solid #e2e8f0;
+        padding: 1rem;
     }
     </style>
 """, unsafe_allow_html=True)
@@ -444,17 +483,17 @@ def enviar_correo_nuevo_registro(datos_cientifico):
         
         body = f"""
         <html>
-        <body style="font-family: Arial, sans-serif; background-color: #0f172a; color: #e2e8f0;">
-            <h2 style="color: #38bdf8;">Nuevo científico registrado</h2>
-            <div style="background-color: #1e293b; padding: 15px; border-radius: 12px; border: 1px solid #334155;">
-                <p><strong style="color: #38bdf8;">Código:</strong> {datos_cientifico['codigo']}</p>
-                <p><strong style="color: #38bdf8;">Nombre:</strong> {datos_cientifico['nombre']}</p>
-                <p><strong style="color: #38bdf8;">Profesión:</strong> {datos_cientifico['profesion']}</p>
-                <p><strong style="color: #38bdf8;">Institución:</strong> {datos_cientifico['institucion']}</p>
-                <p><strong style="color: #38bdf8;">País:</strong> {datos_cientifico['pais']}</p>
-                <p><strong style="color: #38bdf8;">Correo:</strong> {datos_cientifico['correo']}</p>
-                <p><strong style="color: #38bdf8;">Teléfono:</strong> {datos_cientifico['telefono']}</p>
-                <p><strong style="color: #38bdf8;">Fecha de registro:</strong> {datos_cientifico['fecha']}</p>
+        <body style="font-family: Arial, sans-serif; background-color: #f8fafc; color: #334155;">
+            <h2 style="color: #1e40af;">Nuevo científico registrado</h2>
+            <div style="background-color: white; padding: 15px; border-radius: 12px; border: 1px solid #e2e8f0;">
+                <p><strong style="color: #1e40af;">Código:</strong> {datos_cientifico['codigo']}</p>
+                <p><strong style="color: #1e40af;">Nombre:</strong> {datos_cientifico['nombre']}</p>
+                <p><strong style="color: #1e40af;">Profesión:</strong> {datos_cientifico['profesion']}</p>
+                <p><strong style="color: #1e40af;">Institución:</strong> {datos_cientifico['institucion']}</p>
+                <p><strong style="color: #1e40af;">País:</strong> {datos_cientifico['pais']}</p>
+                <p><strong style="color: #1e40af;">Correo:</strong> {datos_cientifico['correo']}</p>
+                <p><strong style="color: #1e40af;">Teléfono:</strong> {datos_cientifico['telefono']}</p>
+                <p><strong style="color: #1e40af;">Fecha de registro:</strong> {datos_cientifico['fecha']}</p>
             </div>
         </body>
         </html>
@@ -479,16 +518,16 @@ class PDFCenso(FPDF):
             self.image(LOGO_HEADER, 10, 8, 25)
         
         self.set_font('Arial', 'B', 14)
-        self.set_text_color(15, 23, 42)
+        self.set_text_color(30, 58, 138)
         self.cell(0, 10, 'CENSO DE CIENTIFICOS Y TECNICOS', 0, 1, 'C')
         self.set_font('Arial', 'B', 10)
-        self.set_text_color(16, 185, 129)
+        self.set_text_color(5, 150, 105)
         self.cell(0, 6, 'CONVOCATORIA ACTIVA', 0, 1, 'C')
         self.set_font('Arial', '', 9)
         self.set_text_color(100, 100, 100)
         self.cell(0, 5, f'Generado el: {datetime.now().strftime("%d/%m/%Y %H:%M")}', 0, 1, 'C')
         self.ln(8)
-        self.set_draw_color(56, 189, 248)
+        self.set_draw_color(37, 99, 235)
         self.line(10, self.get_y(), 200, self.get_y())
         self.ln(5)
     
@@ -504,7 +543,7 @@ def generar_pdf_censo(df):
     pdf.add_page()
     pdf.set_font('Arial', '', 8)
     
-    pdf.set_fill_color(56, 189, 248)
+    pdf.set_fill_color(37, 99, 235)
     pdf.set_text_color(255, 255, 255)
     pdf.set_font('Arial', 'B', 8)
     
@@ -590,7 +629,7 @@ with st.sidebar:
     df_count = obtener_todos()
     st.markdown('<div class="info-box">', unsafe_allow_html=True)
     st.markdown("**Total de registros:**")
-    st.markdown(f"<h2 style='text-align: center; color: #38bdf8; margin: 0;'>{len(df_count)}</h2>", unsafe_allow_html=True)
+    st.markdown(f"<h2 style='text-align: center; color: #1e40af; margin: 0;'>{len(df_count)}</h2>", unsafe_allow_html=True)
     st.markdown("</div>", unsafe_allow_html=True)
     
     st.markdown("---")
