@@ -407,129 +407,100 @@ def update_admin_email(email, email_password):
 
 # ==================== FUNCIONES DE BASE DE DATOS ====================
 
-def get_db_connection():
-    return sqlite3.connect(DB_FILE)
+# ==================== FUNCIONES DE BASE DE DATOS ====================
 
-def verificar_y_migrar_tabla():
-    """Verifica que la tabla tenga todas las columnas necesarias y las agrega si faltan."""
-    conn = get_db_connection()
-    c = conn.cursor()
+from supabase import create_client, Client  # Añade esta importación si no la tienes
 
-    # Obtener columnas actuales
-    c.execute("PRAGMA table_info(cientificos)")
-    columnas_existentes = {col[1] for col in c.fetchall()}
-
-    # Columnas requeridas
-    columnas_requeridas = {
-        'id': 'INTEGER PRIMARY KEY AUTOINCREMENT',
-        'codigo': 'TEXT UNIQUE',
-        'fecha_registro': 'TEXT',
-        'nombre_completo': 'TEXT NOT NULL',
-        'correo_electronico': 'TEXT NOT NULL',
-        'telefono': 'TEXT',
-        'fecha_nacimiento': 'TEXT',
-        'genero': 'TEXT',
-        'pais': 'TEXT',
-        'ciudad': 'TEXT',
-        'profesion': 'TEXT',
-        'nivel_academico': 'TEXT',
-        'institucion': 'TEXT',
-        'anos_experiencia': 'INTEGER',
-        'area_especializacion': 'TEXT',
-        'idiomas': 'TEXT',
-        'equipos_maneja': 'TEXT',
-        'misiones_campo': 'TEXT',
-        'disponibilidad': 'TEXT',
-        'certificaciones': 'TEXT',
-        'municipio': 'TEXT',
-        'parroquia': 'TEXT',
-        'comentarios': 'TEXT'
-    }
-
-    # Si la tabla no existe, crearla
-    if not columnas_existentes:
-        columnas_sql = ", \
-            ".join([f"{k} {v}" for k, v in columnas_requeridas.items()])
-        c.execute(f"CREATE TABLE cientificos ({columnas_sql})")
-        conn.commit()
-        conn.close()
-        return
-
-    # Si existe, verificar columnas faltantes
-    for columna, tipo in columnas_requeridas.items():
-        if columna not in columnas_existentes:
-            try:
-                c.execute(f"ALTER TABLE cientificos ADD COLUMN {columna} {tipo}")
-            except sqlite3.OperationalError:
-                pass  # Columna ya existe o error menor
-
-    conn.commit()
-    conn.close()
+@st.cache_resource
+def init_supabase():
+    """Obtiene el cliente de Supabase desde los secretos y lo cachea."""
+    url = st.secrets["connections"]["supabase"]["SUPABASE_URL"]
+    key = st.secrets["connections"]["supabase"]["SUPABASE_KEY"]
+    return create_client(url, key)
 
 def init_db():
-    verificar_y_migrar_tabla()
+    pass  # No es necesario crear tablas, ya existen en Supabase
 
 def generar_codigo():
-    conn = get_db_connection()
-    c = conn.cursor()
-    c.execute("SELECT COUNT(*) FROM cientificos")
-    count = c.fetchone()[0] + 1
-    conn.close()
-    return f"SIS-{count:03d}"
+    supabase = init_supabase()
+    # Obtener todos los códigos para calcular el siguiente número
+    response = supabase.table("cientificos").select("codigo").execute()
+    codes = [int(r["codigo"].split("-")[1]) for r in response.data if r["codigo"]]
+    max_num = max(codes) if codes else 0
+    return f"SIS-{max_num + 1:03d}"
 
 def insertar_cientifico(datos):
-    conn = get_db_connection()
-    c = conn.cursor()
-    c.execute('''
-        INSERT INTO cientificos (
-            codigo, fecha_registro, nombre_completo, correo_electronico, telefono,
-            fecha_nacimiento, genero, pais, ciudad, profesion, nivel_academico,
-            institucion, anos_experiencia, area_especializacion, idiomas,
-            equipos_maneja, misiones_campo, disponibilidad, certificaciones,
-            municipio, parroquia, comentarios
-        ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
-    ''', datos)
-    conn.commit()
-    conn.close()
+    # datos es una tupla con 22 elementos (igual que antes)
+    supabase = init_supabase()
+    data = {
+        "codigo": datos[0],
+        "fecha_registro": datos[1],
+        "nombre_completo": datos[2],
+        "correo_electronico": datos[3],
+        "telefono": datos[4],
+        "fecha_nacimiento": datos[5],
+        "genero": datos[6],
+        "pais": datos[7],
+        "ciudad": datos[8],
+        "profesion": datos[9],
+        "nivel_academico": datos[10],
+        "institucion": datos[11],
+        "anos_experiencia": datos[12],
+        "area_especializacion": datos[13],
+        "idiomas": datos[14],
+        "equipos_maneja": datos[15],
+        "misiones_campo": datos[16],
+        "disponibilidad": datos[17],
+        "certificaciones": datos[18],
+        "municipio": datos[19],
+        "parroquia": datos[20],
+        "comentarios": datos[21]
+    }
+    supabase.table("cientificos").insert(data).execute()
 
 def obtener_todos():
-    conn = get_db_connection()
-    df = pd.read_sql_query("SELECT * FROM cientificos ORDER BY id DESC", conn)
-    conn.close()
+    supabase = init_supabase()
+    response = supabase.table("cientificos").select("*").order("id", desc=True).execute()
+    df = pd.DataFrame(response.data)
     return df
 
 def obtener_por_id(codigo):
-    conn = get_db_connection()
-    c = conn.cursor()
-    c.execute("SELECT * FROM cientificos WHERE codigo = ?", (codigo,))
-    row = c.fetchone()
-    conn.close()
-    return row
+    supabase = init_supabase()
+    response = supabase.table("cientificos").select("*").eq("codigo", codigo).execute()
+    if response.data:
+        return response.data[0]  # devuelve un diccionario
+    return None
 
 def actualizar_cientifico(codigo, datos):
-    conn = get_db_connection()
-    c = conn.cursor()
-    c.execute('''
-        UPDATE cientificos SET
-            nombre_completo=?, correo_electronico=?, telefono=?, fecha_nacimiento=?,
-            genero=?, pais=?, ciudad=?, profesion=?, nivel_academico=?,
-            institucion=?, anos_experiencia=?, area_especializacion=?, idiomas=?,
-            equipos_maneja=?, misiones_campo=?, disponibilidad=?, certificaciones=?,
-            municipio=?, parroquia=?, comentarios=?
-        WHERE codigo=?
-    ''', (*datos, codigo))
-    conn.commit()
-    conn.close()
+    # datos es una tupla con 20 campos (todos excepto el código)
+    supabase = init_supabase()
+    data = {
+        "nombre_completo": datos[0],
+        "correo_electronico": datos[1],
+        "telefono": datos[2],
+        "fecha_nacimiento": datos[3],
+        "genero": datos[4],
+        "pais": datos[5],
+        "ciudad": datos[6],
+        "profesion": datos[7],
+        "nivel_academico": datos[8],
+        "institucion": datos[9],
+        "anos_experiencia": datos[10],
+        "area_especializacion": datos[11],
+        "idiomas": datos[12],
+        "equipos_maneja": datos[13],
+        "misiones_campo": datos[14],
+        "disponibilidad": datos[15],
+        "certificaciones": datos[16],
+        "municipio": datos[17],
+        "parroquia": datos[18],
+        "comentarios": datos[19]
+    }
+    supabase.table("cientificos").update(data).eq("codigo", codigo).execute()
 
 def eliminar_cientifico(codigo):
-    conn = get_db_connection()
-    c = conn.cursor()
-    c.execute("DELETE FROM cientificos WHERE codigo = ?", (codigo,))
-    conn.commit()
-    conn.close()
-
-# Inicializar base de datos
-init_db()
+    supabase = init_supabase()
+    supabase.table("cientificos").delete().eq("codigo", codigo).execute()
 
 # ==================== FUNCIONES DE CORREO ====================
 def enviar_correo_nuevo_registro(datos_cientifico):

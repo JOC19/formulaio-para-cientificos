@@ -1,0 +1,13 @@
+# Secretos y credenciales
+.streamlit/secrets.toml
+config.json   # opcional, si contiene contraseñas sensibles
+
+# Bases de datos locales
+*.db
+*.sqlite
+*.sqlite3
+
+# Archivos temporales
+*.pyc
+__pycache__/
+temp/
