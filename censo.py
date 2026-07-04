@@ -593,7 +593,7 @@ class PDFCenso(FPDF):
         self.cell(0, 5, f'Generado el: {datetime.now().strftime("%d/%m/%Y %H:%M")}', 0, 1, 'C')
         self.ln(8)
         self.set_draw_color(37, 99, 235)
-        self.line(10, self.get_y(), 200, self.get_y())
+        self.line(10, self.get_y(), 287, self.get_y())
         self.ln(5)
 
     def footer(self):
@@ -603,6 +603,72 @@ class PDFCenso(FPDF):
         self.cell(0, 10, f'Pagina {self.page_no()}', 0, 0, 'C')
 
 def generar_pdf_censo(df):
+    pdf = PDFCenso(orientation='L', unit='mm', format='A4')
+    pdf.set_auto_page_break(auto=True, margin=15)
+    pdf.add_page()
+    pdf.set_font('Arial', '', 8)
+
+    pdf.set_fill_color(37, 99, 235)
+    pdf.set_text_color(255, 255, 255)
+    pdf.set_font('Arial', 'B', 8)
+
+    headers = ['Codigo', 'Nombre', 'Profesion', 'Institucion', 'Pais', 'Ciudad', 'Municipio', 'Parroquia', 'Nivel', 'Exp', 'Disponibilidad']
+    col_widths = [22, 50, 40, 45, 25, 30, 35, 35, 22, 12, 35]
+
+    for i, header in enumerate(headers):
+        pdf.cell(col_widths[i], 8, header, 1, 0, 'C', True)
+    pdf.ln()
+
+    pdf.set_text_color(30, 41, 59)
+    pdf.set_font('Arial', '', 7)
+
+    for _, row in df.iterrows():
+        max_lines = 1
+        textos = [
+            str(row['codigo']),
+            str(row['nombre_completo']),
+            str(row['profesion']),
+            str(row['institucion']),
+            str(row['pais']),
+            str(row['ciudad']) if pd.notna(row['ciudad']) else '',
+            str(row['municipio']) if pd.notna(row['municipio']) else '',
+            str(row['parroquia']) if pd.notna(row['parroquia']) else '',
+            str(row['nivel_academico']),
+            str(row['anos_experiencia']),
+            str(row['disponibilidad'])
+        ]
+        
+        for j, texto in enumerate(textos):
+            lines_needed = pdf.get_string_width(texto) / (col_widths[j] - 2)
+            if lines_needed > max_lines:
+                max_lines = max(1, int(lines_needed) + 1)
+        
+        row_height = 6 * max_lines
+        
+        x_start = pdf.get_x()
+        y_start = pdf.get_y()
+        
+        for j, texto in enumerate(textos):
+            pdf.rect(x_start + sum(col_widths[:j]), y_start, col_widths[j], row_height)
+            pdf.set_xy(x_start + sum(col_widths[:j]), y_start)
+            pdf.multi_cell(col_widths[j], 6, texto[:50] if j in [1,2,3] else texto[:20], 0, 'C' if j in [0,8,9] else 'L')
+        
+        pdf.set_y(y_start + row_height)
+        
+        if pdf.get_y() > 180:
+            pdf.add_page()
+            pdf.set_fill_color(37, 99, 235)
+            pdf.set_text_color(255, 255, 255)
+            pdf.set_font('Arial', 'B', 8)
+            for i, header in enumerate(headers):
+                pdf.cell(col_widths[i], 8, header, 1, 0, 'C', True)
+            pdf.ln()
+            pdf.set_text_color(30, 41, 59)
+            pdf.set_font('Arial', '', 7)
+
+    temp_file = tempfile.NamedTemporaryFile(delete=False, suffix='.pdf')
+    pdf.output(temp_file.name)
+    return temp_file.name
     pdf = PDFCenso()
     pdf.set_auto_page_break(auto=True, margin=15)
     pdf.add_page()
