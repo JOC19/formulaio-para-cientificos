@@ -1,7 +1,5 @@
 
-# Voy a generar el archivo corregido con el CSS del sidebar arreglado
-
-codigo_corregido = '''import streamlit as st
+import streamlit as st
 import pandas as pd
 import sqlite3
 from datetime import datetime
@@ -111,12 +109,12 @@ st.markdown("""
        VARIABLES CSS - Se adaptan automáticamente
        al tema claro/oscuro de Streamlit
        ============================================ */
-    
+
     /* Fondo principal - usa el color nativo de Streamlit */
     .stApp {
         background: transparent !important;
     }
-    
+
     /* Header con logo y título */
     .header-container {
         display: flex;
@@ -126,7 +124,7 @@ st.markdown("""
         padding: 1rem 0;
         margin-bottom: 0.5rem;
     }
-    
+
     .main-header {
         font-size: 2.4rem;
         font-weight: 800;
@@ -136,14 +134,14 @@ st.markdown("""
         letter-spacing: -0.5px;
         text-shadow: 0 2px 4px rgba(30, 64, 175, 0.1);
     }
-    
+
     /* En modo oscuro, ajustar color del título principal */
     [data-testid="stAppViewContainer"] .st-emotion-cache-1v0mbdj .main-header,
     [data-theme="dark"] .main-header {
         color: #60a5fa;
         text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
     }
-    
+
     .convocatoria-badge {
         display: inline-block;
         background: linear-gradient(135deg, #059669 0%, #047857 100%);
@@ -157,12 +155,12 @@ st.markdown("""
         box-shadow: 0 4px 15px rgba(5, 150, 105, 0.3);
         animation: pulse 2s infinite;
     }
-    
+
     @keyframes pulse {
         0%, 100% { opacity: 1; transform: scale(1); }
         50% { opacity: 0.9; transform: scale(1.02); }
     }
-    
+
     .sub-header {
         font-size: 1.1rem;
         color: #64748b;
@@ -170,19 +168,19 @@ st.markdown("""
         margin-bottom: 2rem;
         margin-top: 0.5rem;
     }
-    
+
     /* ============================================
        SIDEBAR - FONDO AZUL + LETRAS BLANCAS SIEMPRE
        ============================================ */
     [data-testid="stSidebar"] {
         background: linear-gradient(180deg, #1e3a5f 0%, #1e40af 100%) !important;
     }
-    
+
     /* TODOS los textos del sidebar en blanco */
     [data-testid="stSidebar"] * {
         color: #f8fafc !important;
     }
-    
+
     /* Radio buttons del sidebar */
     [data-testid="stSidebar"] .stRadio > div {
         background: rgba(255, 255, 255, 0.08) !important;
@@ -190,17 +188,17 @@ st.markdown("""
         border-radius: 10px;
         padding: 0.5rem 1rem;
     }
-    
+
     /* Radio button seleccionado */
     [data-testid="stSidebar"] .stRadio > div [role="radiogroup"] label {
         color: #f8fafc !important;
     }
-    
+
     /* Hover en radio buttons */
     [data-testid="stSidebar"] .stRadio > div:hover {
         background: rgba(255, 255, 255, 0.15) !important;
     }
-    
+
     /* Títulos del sidebar */
     [data-testid="stSidebar"] h1,
     [data-testid="stSidebar"] h2,
@@ -208,28 +206,28 @@ st.markdown("""
     [data-testid="stSidebar"] h4 {
         color: #f8fafc !important;
     }
-    
+
     /* Markdown en sidebar */
     [data-testid="stSidebar"] .stMarkdown {
         color: #f8fafc !important;
     }
-    
+
     /* Info box en sidebar */
     [data-testid="stSidebar"] .stAlert {
         background: rgba(255, 255, 255, 0.1) !important;
         border: 1px solid rgba(255, 255, 255, 0.2) !important;
         color: #f8fafc !important;
     }
-    
+
     [data-testid="stSidebar"] .stAlert * {
         color: #f8fafc !important;
     }
-    
+
     /* Separadores en sidebar */
     [data-testid="stSidebar"] hr {
         border-color: rgba(255, 255, 255, 0.2) !important;
     }
-    
+
     .admin-badge {
         background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
         color: white;
@@ -240,7 +238,7 @@ st.markdown("""
         display: inline-block;
         box-shadow: 0 2px 10px rgba(245, 158, 11, 0.3);
     }
-    
+
     /* Botones */
     .stButton>button {
         background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%);
@@ -252,13 +250,13 @@ st.markdown("""
         box-shadow: 0 4px 15px rgba(37, 99, 235, 0.3);
         transition: all 0.3s ease;
     }
-    
+
     .stButton>button:hover {
         background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
         box-shadow: 0 6px 20px rgba(37, 99, 235, 0.5);
         transform: translateY(-2px);
     }
-    
+
     /* ============================================
        FORMULARIOS - Fondo transparente, usa el del tema
        ============================================ */
@@ -269,13 +267,13 @@ st.markdown("""
         border: 1px solid rgba(128, 128, 128, 0.2);
         box-shadow: 0 8px 32px rgba(0, 0, 0, 0.08);
     }
-    
+
     /* En modo oscuro, ajustar bordes */
     [data-theme="dark"] .stForm {
         border-color: rgba(255, 255, 255, 0.1);
         background: rgba(255, 255, 255, 0.03);
     }
-    
+
     /* Inputs - heredan colores del tema */
     .stTextInput>div>div>input, 
     .stSelectbox>div>div>select, 
@@ -283,20 +281,20 @@ st.markdown("""
         border-radius: 10px;
         padding: 0.5rem;
     }
-    
+
     .stTextInput>div>div>input:focus, 
     .stSelectbox>div>div>select:focus {
         border-color: #3b82f6;
         box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.15);
     }
-    
+
     /* Labels - heredan color del tema */
     .stTextInput label, .stSelectbox label, .stTextArea label, 
     .stNumberInput label, .stDateInput label, .stRadio label {
         font-weight: 600;
         font-size: 0.95rem;
     }
-    
+
     /* ============================================
        MENSAJES - Fondos semi-transparentes
        ============================================ */
@@ -306,34 +304,34 @@ st.markdown("""
         border-left: 5px solid #10b981;
         border-radius: 12px;
     }
-    
+
     [data-theme="dark"] .success-msg {
         background: rgba(16, 185, 129, 0.1);
     }
-    
+
     .warning-msg {
         padding: 1.2rem;
         background: rgba(245, 158, 11, 0.15);
         border-left: 5px solid #f59e0b;
         border-radius: 12px;
     }
-    
+
     [data-theme="dark"] .warning-msg {
         background: rgba(245, 158, 11, 0.1);
     }
-    
+
     .info-box {
         padding: 1.2rem;
         border-radius: 12px;
         border: 1px solid rgba(59, 130, 246, 0.3);
         background: rgba(59, 130, 246, 0.1);
     }
-    
+
     [data-theme="dark"] .info-box {
         background: rgba(59, 130, 246, 0.08);
         border-color: rgba(59, 130, 246, 0.2);
     }
-    
+
     /* ============================================
        LOGIN BOX - Fondo semi-transparente
        ============================================ */
@@ -346,12 +344,12 @@ st.markdown("""
         box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
         background: rgba(128, 128, 128, 0.05);
     }
-    
+
     [data-theme="dark"] .login-box {
         border-color: rgba(255, 255, 255, 0.1);
         background: rgba(255, 255, 255, 0.03);
     }
-    
+
     /* ============================================
        DATAFRAME - Sin fondo blanco forzado
        ============================================ */
@@ -360,7 +358,7 @@ st.markdown("""
         border: 1px solid rgba(128, 128, 128, 0.2);
         box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
     }
-    
+
     /* Radio buttons del contenido principal */
     .stRadio > div {
         padding: 0.5rem 1rem;
@@ -368,73 +366,73 @@ st.markdown("""
         border: 2px solid rgba(128, 128, 128, 0.2);
         background: rgba(128, 128, 128, 0.05);
     }
-    
+
     /* Multiselect */
     .stMultiSelect > div > div {
         border-radius: 10px;
         border: 2px solid rgba(128, 128, 128, 0.2);
     }
-    
+
     /* Markdown text - hereda color del tema */
     .stMarkdown {
         color: inherit;
     }
-    
+
     /* Section headers */
     .stMarkdown h3, .stMarkdown h4 {
         border-bottom: 2px solid rgba(128, 128, 128, 0.2);
         padding-bottom: 0.5rem;
         margin-top: 1.5rem;
     }
-    
+
     /* Streamlit info - sin fondo blanco */
     .stAlert {
         border-radius: 12px;
         box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
     }
-    
+
     /* Download button */
     .stDownloadButton>button {
         background: linear-gradient(135deg, #7c3aed 0%, #6d28d9 100%);
         box-shadow: 0 4px 15px rgba(124, 58, 237, 0.3);
     }
-    
+
     .stDownloadButton>button:hover {
         background: linear-gradient(135deg, #8b5cf6 0%, #7c3aed 100%);
         box-shadow: 0 6px 20px rgba(124, 58, 237, 0.5);
     }
-    
+
     /* Cards y métricas - sin fondo blanco forzado */
     .css-1r6slb0, .css-1xarl3l {
         border-radius: 12px;
         border: 1px solid rgba(128, 128, 128, 0.2);
         padding: 1rem;
     }
-    
+
     /* ============================================
        FIX PARA CONTENEDORES INTERNOS DE STREAMLIT
        ============================================ */
-    
+
     /* Eliminar fondos blancos forzados en contenedores */
     [data-testid="stVerticalBlock"] > [data-testid="stVerticalBlockBorderWrapper"] {
         background: transparent !important;
     }
-    
+
     /* Asegurar que los bloques principales hereden el fondo */
     [data-testid="stAppViewContainer"] {
         background: transparent !important;
     }
-    
+
     /* Fix para bloques de contenido */
     .block-container {
         background: transparent !important;
     }
-    
+
     /* Fix para elementos de formulario en modo oscuro */
     [data-testid="stForm"] {
         background: transparent !important;
     }
-    
+
     /* Ajustar color de texto en modo oscuro para elementos custom */
     [data-theme="dark"] .stMarkdown p,
     [data-theme="dark"] .stMarkdown span,
@@ -486,7 +484,7 @@ def update_admin_email(email, email_password):
 def init_db():
     conn = sqlite3.connect(DB_FILE)
     c = conn.cursor()
-    c.execute(\'\'\'
+    c.execute('''
         CREATE TABLE IF NOT EXISTS cientificos (
             id INTEGER PRIMARY KEY AUTOINCREMENT,
             codigo TEXT UNIQUE,
@@ -512,7 +510,7 @@ def init_db():
             parroquia TEXT,
             comentarios TEXT
         )
-    \'\'\')
+    ''')
     conn.commit()
     conn.close()
 
@@ -530,7 +528,7 @@ def generar_codigo():
 def insertar_cientifico(datos):
     conn = get_db_connection()
     c = conn.cursor()
-    c.execute(\'\'\'
+    c.execute('''
         INSERT INTO cientificos (
             codigo, fecha_registro, nombre_completo, correo_electronico, telefono,
             fecha_nacimiento, genero, pais, ciudad, profesion, nivel_academico,
@@ -538,7 +536,7 @@ def insertar_cientifico(datos):
             equipos_maneja, misiones_campo, disponibilidad, certificaciones,
             municipio, parroquia, comentarios
         ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
-    \'\'\', datos)
+    ''', datos)
     conn.commit()
     conn.close()
 
@@ -559,7 +557,7 @@ def obtener_por_id(codigo):
 def actualizar_cientifico(codigo, datos):
     conn = get_db_connection()
     c = conn.cursor()
-    c.execute(\'\'\'
+    c.execute('''
         UPDATE cientificos SET
             nombre_completo=?, correo_electronico=?, telefono=?, fecha_nacimiento=?,
             genero=?, pais=?, ciudad=?, profesion=?, nivel_academico=?,
@@ -567,7 +565,7 @@ def actualizar_cientifico(codigo, datos):
             equipos_maneja=?, misiones_campo=?, disponibilidad=?, certificaciones=?,
             municipio=?, parroquia=?, comentarios=?
         WHERE codigo=?
-    \'\'\', (*datos, codigo))
+    ''', (*datos, codigo))
     conn.commit()
     conn.close()
 
@@ -587,15 +585,15 @@ def enviar_correo_nuevo_registro(datos_cientifico):
         config = init_config()
         admin_email = config.get("admin_email", "")
         email_password = config.get("email_password", "")
-        
+
         if not admin_email or not email_password or admin_email == "tucorreo@gmail.com":
             return False, "Correo no configurado"
-        
+
         msg = MIMEMultipart()
         msg['From'] = admin_email
         msg['To'] = admin_email
         msg['Subject'] = f"🌋 Nuevo registro en Censo - {datos_cientifico['nombre']}"
-        
+
         body = f"""
         <html>
         <body style="font-family: Arial, sans-serif;">
@@ -613,15 +611,15 @@ def enviar_correo_nuevo_registro(datos_cientifico):
         </body>
         </html>
         """
-        
+
         msg.attach(MIMEText(body, 'html'))
-        
+
         server = smtplib.SMTP('smtp.gmail.com', 587)
         server.starttls()
         server.login(admin_email, email_password)
         server.send_message(msg)
         server.quit()
-        
+
         return True, "Correo enviado correctamente"
     except Exception as e:
         return False, str(e)
@@ -631,7 +629,7 @@ class PDFCenso(FPDF):
     def header(self):
         if os.path.exists(LOGO_HEADER):
             self.image(LOGO_HEADER, 10, 8, 25)
-        
+
         self.set_font('Arial', 'B', 14)
         self.set_text_color(30, 58, 138)
         self.cell(0, 10, 'CENSO DE CIENTIFICOS Y TECNICOS', 0, 1, 'C')
@@ -645,7 +643,7 @@ class PDFCenso(FPDF):
         self.set_draw_color(37, 99, 235)
         self.line(10, self.get_y(), 200, self.get_y())
         self.ln(5)
-    
+
     def footer(self):
         self.set_y(-15)
         self.set_font('Arial', 'I', 8)
@@ -657,21 +655,21 @@ def generar_pdf_censo(df):
     pdf.set_auto_page_break(auto=True, margin=15)
     pdf.add_page()
     pdf.set_font('Arial', '', 8)
-    
+
     pdf.set_fill_color(37, 99, 235)
     pdf.set_text_color(255, 255, 255)
     pdf.set_font('Arial', 'B', 8)
-    
+
     headers = ['Codigo', 'Nombre', 'Profesion', 'Institucion', 'Pais', 'Nivel', 'Exp', 'Disponibilidad']
     col_widths = [20, 45, 35, 35, 25, 20, 12, 30]
-    
+
     for i, header in enumerate(headers):
         pdf.cell(col_widths[i], 8, header, 1, 0, 'C', True)
     pdf.ln()
-    
+
     pdf.set_text_color(30, 41, 59)
     pdf.set_font('Arial', '', 7)
-    
+
     for _, row in df.iterrows():
         pdf.cell(col_widths[0], 6, str(row['codigo']), 1, 0, 'C')
         pdf.cell(col_widths[1], 6, str(row['nombre_completo'])[:25], 1, 0, 'L')
@@ -682,7 +680,7 @@ def generar_pdf_censo(df):
         pdf.cell(col_widths[6], 6, str(row['anos_experiencia']), 1, 0, 'C')
         pdf.cell(col_widths[7], 6, str(row['disponibilidad'])[:18], 1, 0, 'L')
         pdf.ln()
-    
+
     temp_file = tempfile.NamedTemporaryFile(delete=False, suffix='.pdf')
     pdf.output(temp_file.name)
     return temp_file.name
@@ -719,14 +717,14 @@ with st.sidebar:
         st.sidebar.image(LOGO_SIDEBAR, use_container_width=True)
     else:
         st.sidebar.markdown("🌋 **Censo**")
-    
+
     st.markdown("### 📊 Panel de Control")
     st.markdown("---")
-    
+
     if st.session_state.admin_logged_in:
         st.markdown('<span class="admin-badge">🔐 MODO ADMINISTRADOR</span>', unsafe_allow_html=True)
         st.markdown("---")
-    
+
     if st.session_state.admin_logged_in:
         menu = st.radio(
             "Selecciona una opción:",
@@ -738,15 +736,15 @@ with st.sidebar:
             "Selecciona una opción:",
             ["📝 Registrar Científico", "📋 Ver Registros", "🗺️ Mapa de Ubicaciones", "📈 Estadísticas", "📄 Generar PDF", "🔐 Acceso Administrador"]
         )
-    
+
     st.markdown("---")
-    
+
     df_count = obtener_todos()
     st.markdown('<div class="info-box">', unsafe_allow_html=True)
     st.markdown("**Total de registros:**")
     st.markdown(f"<h2 style='text-align: center; color: #1e40af; margin: 0;'>{len(df_count)}</h2>", unsafe_allow_html=True)
     st.markdown("</div>", unsafe_allow_html=True)
-    
+
     st.markdown("---")
     st.info("💡 Este censo recopila información de profesionales técnicos.")
 
@@ -755,9 +753,9 @@ def admin_login():
     st.markdown('<div class="login-box">', unsafe_allow_html=True)
     st.markdown("### 🔐 Acceso Administrador")
     st.warning("⚠️ Área restringida. Solo personal autorizado.")
-    
+
     password = st.text_input("Contraseña", type="password")
-    
+
     col1, col2 = st.columns(2)
     with col1:
         if st.button("Iniciar sesión"):
@@ -767,11 +765,11 @@ def admin_login():
                 st.rerun()
             else:
                 st.error("❌ Contraseña incorrecta")
-    
+
     with col2:
         st.markdown("*Contraseña por defecto: admin123*")
         st.markdown("*Cámbiala en Configuración*")
-    
+
     st.markdown('</div>', unsafe_allow_html=True)
 
 # ==================== CERRAR SESIÓN ====================
@@ -784,19 +782,19 @@ def cerrar_sesion():
 def formulario_registro():
     st.markdown("### 📝 Formulario de Registro")
     st.markdown("Complete todos los campos obligatorios (*)")
-    
+
     with st.form("formulario_censo", clear_on_submit=True):
         col1, col2 = st.columns(2)
-        
+
         with col1:
             st.markdown("#### 👤 Información Personal")
             nombre = st.text_input("Nombre completo *", placeholder="Ej: Dr. María Elena Vásquez")
             correo = st.text_input("Correo electrónico *", placeholder="ejemplo@institucion.gob")
             telefono = st.text_input("Teléfono *", placeholder="+58 412 1234567")
             fecha_nac = st.date_input("Fecha de nacimiento", value=datetime(1985, 1, 1))
-            
+
             genero = st.selectbox("Género *", ["", "Masculino", "Femenino"])
-            
+
             st.markdown("#### 🌍 Ubicación")
             pais = st.selectbox("País *", [
                 "", "Venezuela", "Colombia", "Ecuador", "Perú", "Chile", "Argentina", 
@@ -805,21 +803,21 @@ def formulario_registro():
                 "España", "Japón", "Italia", "Nueva Zelanda", "Otro"
             ])
             ciudad = st.text_input("Ciudad *", placeholder="Ej: Caracas")
-            
+
             # MUNICIPIO DE SUCRE
             st.markdown("#### 📍 Municipio del Estado Sucre")
             municipio_seleccionado = st.selectbox(
                 "Municipio *",
                 [""] + list(MUNICIPIOS_SUCRE.keys())
             )
-            
+
             # PARROQUIA DE VENEZUELA (menú independiente)
             st.markdown("#### 🏘️ Parroquia")
             parroquia_seleccionada = st.selectbox(
                 "Parroquia *",
                 [""] + PARROQUIAS_VENEZUELA
             )
-        
+
         with col2:
             st.markdown("#### 🎓 Formación Profesional")
             profesion = st.text_input("Profesión *", placeholder="Ej: Ingeniero Geofísico")
@@ -830,7 +828,7 @@ def formulario_registro():
                                        placeholder="Ej: FUNVISIS, UCV, USB")
             anos_exp = st.number_input("Años de experiencia *", 
                                       min_value=0, max_value=50, value=5)
-            
+
             st.markdown("#### 🔬 Especialización")
             area_esp = st.multiselect("Área de especialización", [
                 "Sismología instrumental", "Ingeniería sísmica", "Sismología de exploración",
@@ -838,51 +836,51 @@ def formulario_registro():
                 "Riesgo sísmico", "Sismología de pozo", "Sismología global",
                 "Sismología de fuente", "Ondas de superficie", "Otro"
             ])
-            
+
             equipos = st.multiselect("Equipos que maneja", [
                 "Sismógrafo de banda ancha", "Acelerógrafo", "Estación GPS/GNSS",
                 "Inclinómetro", "Extensómetro", "Tiltmeter", "Software SEISAN",
                 "Software Antelope", "Software ObsPy", "Software SAC", "GIS (ArcGIS/QGIS)",
                 "Estación meteorológica", "Dron para mapeo", "Otro"
             ])
-        
+
         st.markdown("#### 💼 Información Adicional")
         col3, col4 = st.columns(2)
-        
+
         with col3:
             idiomas = st.multiselect("Idiomas que domina", [
                 "Español", "Inglés", "Francés", "Alemán", "Japonés", 
                 "Italiano", "Portugués", "Chino", "Ruso", "Otro"
             ], default=["Español"])
-            
+
             misiones = st.radio("¿Ha participado en misiones de campo? *", 
                                ["Sí", "No"], horizontal=True)
-        
+
         with col4:
             disponibilidad = st.selectbox("Disponibilidad de tiempo *", [
                 "", "Tiempo completo", "Medio tiempo (mañana)", "Medio tiempo (tarde)",
                 "Fines de semana", "Disponibilidad inmediata", "No disponible actualmente"
             ])
-            
+
             certificaciones = st.text_area("Certificaciones relevantes", 
                                           placeholder="Ej: Normas técnicas de construcción, certificaciones FUNVISIS, etc.")
-        
+
         comentarios = st.text_area("Comentarios adicionales", 
                                   placeholder="Información adicional relevante para el censo...")
-        
+
         submitted = st.form_submit_button("💾 Guardar Registro")
-        
+
         if submitted:
             campos_obligatorios = [nombre, correo, telefono, genero, pais, ciudad, 
                                   profesion, nivel_academico, institucion, disponibilidad,
                                   municipio_seleccionado, parroquia_seleccionada]
-            
+
             if "" in campos_obligatorios or None in campos_obligatorios:
                 st.error("❌ Por favor complete todos los campos obligatorios (*)")
             else:
                 codigo = generar_codigo()
                 fecha_reg = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-                
+
                 datos = (
                     codigo, fecha_reg, nombre, correo, telefono,
                     fecha_nac.strftime("%Y-%m-%d"), genero, pais, ciudad,
@@ -891,9 +889,9 @@ def formulario_registro():
                     misiones, disponibilidad, certificaciones,
                     municipio_seleccionado, parroquia_seleccionada, comentarios
                 )
-                
+
                 insertar_cientifico(datos)
-                
+
                 datos_correo = {
                     'codigo': codigo,
                     'nombre': nombre,
@@ -905,7 +903,7 @@ def formulario_registro():
                     'fecha': fecha_reg
                 }
                 exito, mensaje = enviar_correo_nuevo_registro(datos_correo)
-                
+
                 st.markdown('<div class="success-msg">', unsafe_allow_html=True)
                 st.success(f"✅ Registro guardado exitosamente con ID: **{codigo}**")
                 st.markdown(f"**Nombre:** {nombre}")
@@ -922,9 +920,9 @@ def formulario_registro():
 # ==================== VER REGISTROS ====================
 def ver_registros():
     st.markdown("### 📋 Registros del Censo")
-    
+
     df = obtener_todos()
-    
+
     if df.empty:
         st.info("📭 No hay registros en el censo.")
     else:
@@ -937,7 +935,7 @@ def ver_registros():
             filtro_nivel = st.multiselect("Filtrar por nivel académico", niveles)
         with col_f3:
             busqueda = st.text_input("Buscar por nombre o institución")
-        
+
         df_filtrado = df.copy()
         if filtro_pais:
             df_filtrado = df_filtrado[df_filtrado['pais'].isin(filtro_pais)]
@@ -948,13 +946,13 @@ def ver_registros():
                 df_filtrado['nombre_completo'].str.contains(busqueda, case=False, na=False) |
                 df_filtrado['institucion'].str.contains(busqueda, case=False, na=False)
             ]
-        
+
         st.markdown(f"**Mostrando {len(df_filtrado)} de {len(df)} registros**")
-        
+
         columnas_mostrar = ['codigo', 'nombre_completo', 'profesion', 'institucion', 
                            'pais', 'ciudad', 'municipio', 'parroquia', 'nivel_academico', 'anos_experiencia', 'disponibilidad']
         st.dataframe(df_filtrado[columnas_mostrar], use_container_width=True, hide_index=True)
-        
+
         csv = df_filtrado.to_csv(index=False).encode('utf-8')
         st.download_button(
             label="📥 Descargar registros filtrados (CSV)",
@@ -966,21 +964,21 @@ def ver_registros():
 # ==================== EDITAR REGISTRO ====================
 def editar_registro():
     st.markdown("### ✏️ Editar Registro")
-    
+
     df = obtener_todos()
-    
+
     if df.empty:
         st.info("📭 No hay registros para editar.")
         return
-    
+
     codigo = st.selectbox("Selecciona un registro por código", df['codigo'].tolist())
-    
+
     if codigo:
         row = obtener_por_id(codigo)
         if row:
             with st.form("formulario_edicion"):
                 st.markdown(f"#### Editando: {row[2]} ({row[1]})")
-                
+
                 col1, col2 = st.columns(2)
                 with col1:
                     nombre = st.text_input("Nombre completo", value=row[3])
@@ -990,7 +988,7 @@ def editar_registro():
                     institucion = st.text_input("Institución", value=row[12])
                     pais = st.text_input("País", value=row[8])
                     ciudad = st.text_input("Ciudad", value=row[9])
-                    
+
                     # Municipio
                     municipio_actual = row[20] if row[20] else ""
                     municipio_seleccionado = st.selectbox(
@@ -998,7 +996,7 @@ def editar_registro():
                         [""] + list(MUNICIPIOS_SUCRE.keys()),
                         index=([""] + list(MUNICIPIOS_SUCRE.keys())).index(municipio_actual) if municipio_actual in MUNICIPIOS_SUCRE else 0
                     )
-                    
+
                     # Parroquia (menú independiente con todas las parroquias)
                     parroquia_actual = row[21] if row[21] else ""
                     parroquia_seleccionada = st.selectbox(
@@ -1006,13 +1004,13 @@ def editar_registro():
                         [""] + PARROQUIAS_VENEZUELA,
                         index=([""] + PARROQUIAS_VENEZUELA).index(parroquia_actual) if parroquia_actual in PARROQUIAS_VENEZUELA else 0
                     )
-                
+
                 with col2:
                     nivel_academico = st.selectbox("Nivel académico", 
                         ["Técnico", "Licenciatura", "Maestría", "Doctorado", "Posdoctorado"],
                         index=["Técnico", "Licenciatura", "Maestría", "Doctorado", "Posdoctorado"].index(row[11]) if row[11] in ["Técnico", "Licenciatura", "Maestría", "Doctorado", "Posdoctorado"] else 0)
                     anos_exp = st.number_input("Años de experiencia", min_value=0, max_value=50, value=row[13] if row[13] else 0)
-                    
+
                     disponibilidad_opciones = [
                         "Tiempo completo", "Medio tiempo (mañana)", "Medio tiempo (tarde)",
                         "Fines de semana", "Disponibilidad inmediata", "No disponible actualmente"
@@ -1020,11 +1018,11 @@ def editar_registro():
                     disponibilidad = st.selectbox("Disponibilidad de tiempo",
                         disponibilidad_opciones,
                         index=disponibilidad_opciones.index(row[18]) if row[18] in disponibilidad_opciones else 0)
-                
+
                 comentarios = st.text_area("Comentarios", value=row[22] if row[22] else "")
-                
+
                 submitted = st.form_submit_button("💾 Actualizar Registro")
-                
+
                 if submitted:
                     datos = (nombre, correo, telefono, row[6], row[7], pais, ciudad,
                             profesion, nivel_academico, institucion, anos_exp,
@@ -1037,22 +1035,22 @@ def editar_registro():
 def eliminar_registro():
     st.markdown("### 🗑️ Eliminar Registro")
     st.warning("⚠️ Esta acción no se puede deshacer.")
-    
+
     df = obtener_todos()
-    
+
     if df.empty:
         st.info("📭 No hay registros para eliminar.")
         return
-    
+
     codigo = st.selectbox("Selecciona el registro a eliminar", df['codigo'].tolist())
-    
+
     if codigo:
         registro = df[df['codigo'] == codigo].iloc[0]
         st.markdown("#### Registro seleccionado:")
         st.json(registro.to_dict())
-        
+
         confirmacion = st.text_input("Escribe ELIMINAR para confirmar:")
-        
+
         if st.button("🗑️ Eliminar permanentemente", type="primary"):
             if confirmacion == "ELIMINAR":
                 eliminar_cientifico(codigo)
@@ -1065,16 +1063,16 @@ def eliminar_registro():
 def mostrar_mapa():
     st.markdown("### 🗺️ Mapa de Ubicaciones de Científicos")
     st.info("ℹ️ El mapa muestra las ubicaciones basadas en el municipio del estado Sucre.")
-    
+
     df = obtener_todos()
-    
+
     if df.empty:
         st.info("📭 No hay registros para mostrar.")
         return
-    
+
     # Mapa centrado en el estado Sucre
     m = folium.Map(location=[10.5, -63.2], zoom_start=8)
-    
+
     # Coordenadas aproximadas de los municipios de Sucre
     coordenadas_municipios = {
         "Andrés Eloy Blanco (Casanay)": [10.4, -63.5],
@@ -1093,7 +1091,7 @@ def mostrar_mapa():
         "Sucre (Cumaná)": [10.5, -64.2],
         "Valdez (Güiria)": [10.6, -62.3]
     }
-    
+
     colores_municipios = {
         "Andrés Eloy Blanco (Casanay)": "red",
         "Andrés Mata (San José de Areocuar)": "blue",
@@ -1111,13 +1109,13 @@ def mostrar_mapa():
         "Sucre (Cumaná)": "lightgray",
         "Valdez (Güiria)": "black"
     }
-    
+
     for _, row in df.iterrows():
         municipio = row['municipio']
         if municipio and municipio in coordenadas_municipios:
             coords = coordenadas_municipios[municipio]
             color = colores_municipios.get(municipio, "gray")
-            
+
             popup_text = f"""
             <b>{row['nombre_completo']}</b><br>
             {row['profesion']}<br>
@@ -1132,22 +1130,22 @@ def mostrar_mapa():
                 tooltip=f"{row['nombre_completo']}",
                 icon=folium.Icon(color=color, icon='info-sign')
             ).add_to(m)
-    
+
     st_folium(m, width=700, height=500)
-    
+
     st.markdown("---")
     st.markdown(f"**Total de científicos registrados:** {len(df)}")
 
 # ==================== ESTADÍSTICAS ====================
 def estadisticas():
     st.markdown("### 📈 Estadísticas del Censo")
-    
+
     df = obtener_todos()
-    
+
     if df.empty:
         st.info("📭 No hay datos suficientes.")
         return
-    
+
     col_m1, col_m2, col_m3, col_m4 = st.columns(4)
     with col_m1:
         st.metric("Total de científicos", len(df))
@@ -1159,28 +1157,28 @@ def estadisticas():
     with col_m4:
         con_misiones = len(df[df['misiones_campo'] == 'Sí'])
         st.metric("Con experiencia en campo", con_misiones)
-    
+
     st.markdown("---")
-    
+
     col_g1, col_g2 = st.columns(2)
     with col_g1:
         st.markdown("#### Distribución por municipio")
         municipio_counts = df['municipio'].value_counts().head(10)
         st.bar_chart(municipio_counts)
-    
+
     with col_g2:
         st.markdown("#### Distribución por nivel académico")
         nivel_counts = df['nivel_academico'].value_counts()
         st.bar_chart(nivel_counts)
-    
+
     st.markdown("---")
-    
+
     col_g3, col_g4 = st.columns(2)
     with col_g3:
         st.markdown("#### Disponibilidad de tiempo")
         disp_counts = df['disponibilidad'].value_counts()
         st.bar_chart(disp_counts)
-    
+
     with col_g4:
         st.markdown("#### Experiencia en campo")
         mision_counts = df['misiones_campo'].value_counts()
@@ -1189,15 +1187,15 @@ def estadisticas():
 # ==================== GENERAR PDF ====================
 def generar_pdf():
     st.markdown("### 📄 Generar Reporte PDF")
-    
+
     df = obtener_todos()
-    
+
     if df.empty:
         st.info("📭 No hay registros para generar el PDF.")
         return
-    
+
     st.markdown("Selecciona los filtros para el reporte:")
-    
+
     col_f1, col_f2 = st.columns(2)
     with col_f1:
         paises = df['pais'].dropna().unique().tolist()
@@ -1205,15 +1203,15 @@ def generar_pdf():
     with col_f2:
         niveles = df['nivel_academico'].dropna().unique().tolist()
         filtro_nivel = st.multiselect("Filtrar por nivel académico", niveles)
-    
+
     df_reporte = df.copy()
     if filtro_pais:
         df_reporte = df_reporte[df_reporte['pais'].isin(filtro_pais)]
     if filtro_nivel:
         df_reporte = df_reporte[df_reporte['nivel_academico'].isin(filtro_nivel)]
-    
+
     st.markdown(f"**El PDF incluirá {len(df_reporte)} registros**")
-    
+
     if st.button("📄 Generar PDF para imprimir"):
         if df_reporte.empty:
             st.warning("No hay registros con los filtros seleccionados.")
@@ -1221,10 +1219,10 @@ def generar_pdf():
             with st.spinner("Generando PDF..."):
                 try:
                     pdf_path = generar_pdf_censo(df_reporte)
-                    
+
                     with open(pdf_path, "rb") as f:
                         pdf_bytes = f.read()
-                    
+
                     st.success("✅ PDF generado correctamente")
                     st.download_button(
                         label="📥 Descargar PDF",
@@ -1233,9 +1231,9 @@ def generar_pdf():
                         mime="application/pdf",
                         key="download_pdf"
                     )
-                    
+
                     st.info("💡 Descarga el PDF y ábrelo con tu visor de PDF para imprimir.")
-                    
+
                 except Exception as e:
                     st.error(f"❌ Error al generar el PDF: {str(e)}")
                     st.info("💡 Intenta refrescar la página y volver a intentar.")
@@ -1243,12 +1241,12 @@ def generar_pdf():
 # ==================== CONFIGURACIÓN ADMIN ====================
 def configuracion_admin():
     st.markdown("### ⚙️ Configuración de Administrador")
-    
+
     st.markdown("#### Cambiar contraseña")
     actual = st.text_input("Contraseña actual", type="password")
     nueva = st.text_input("Nueva contraseña", type="password")
     confirmar = st.text_input("Confirmar nueva contraseña", type="password")
-    
+
     if st.button("🔑 Cambiar contraseña"):
         if not verify_admin(actual):
             st.error("❌ Contraseña actual incorrecta")
@@ -1259,16 +1257,16 @@ def configuracion_admin():
         else:
             change_admin_password(nueva)
             st.success("✅ Contraseña actualizada correctamente")
-    
+
     st.markdown("---")
-    
+
     st.markdown("#### Configuración de correo Gmail")
     st.info("📧 Configura el correo para recibir notificaciones de nuevos registros.")
-    
+
     email = st.text_input("Correo Gmail del administrador", value="tucorreo@gmail.com")
     email_pass = st.text_input("Contraseña de aplicación Gmail", type="password", 
                                help="No es tu contraseña normal. Es la de 16 caracteres que generas en myaccount.google.com")
-    
+
     if st.button("💾 Guardar configuración de correo"):
         update_admin_email(email, email_pass)
         st.success("✅ Configuración de correo guardada")
@@ -1304,11 +1302,3 @@ elif menu == "⚙️ Configuración Admin":
         configuracion_admin()
     else:
         st.error("🔒 Acceso restringido. Inicia sesión como administrador.")
-'''
-
-# Guardar el archivo corregido
-with open('/mnt/agents/output/censo_corregido.py', 'w', encoding='utf-8') as f:
-    f.write(codigo_corregido)
-
-print("Archivo guardado correctamente en /mnt/agents/output/censo_corregido.py")
-print(f"Tamaño: {len(codigo_corregido)} caracteres")
