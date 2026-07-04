@@ -1,4 +1,7 @@
-import streamlit as st
+
+# Voy a generar el archivo corregido con el CSS del sidebar arreglado
+
+codigo_corregido = '''import streamlit as st
 import pandas as pd
 import sqlite3
 from datetime import datetime
@@ -168,9 +171,63 @@ st.markdown("""
         margin-top: 0.5rem;
     }
     
-    /* Sidebar - mantener el gradiente azul siempre */
+    /* ============================================
+       SIDEBAR - FONDO AZUL + LETRAS BLANCAS SIEMPRE
+       ============================================ */
     [data-testid="stSidebar"] {
         background: linear-gradient(180deg, #1e3a5f 0%, #1e40af 100%) !important;
+    }
+    
+    /* TODOS los textos del sidebar en blanco */
+    [data-testid="stSidebar"] * {
+        color: #f8fafc !important;
+    }
+    
+    /* Radio buttons del sidebar */
+    [data-testid="stSidebar"] .stRadio > div {
+        background: rgba(255, 255, 255, 0.08) !important;
+        border: 1px solid rgba(255, 255, 255, 0.15) !important;
+        border-radius: 10px;
+        padding: 0.5rem 1rem;
+    }
+    
+    /* Radio button seleccionado */
+    [data-testid="stSidebar"] .stRadio > div [role="radiogroup"] label {
+        color: #f8fafc !important;
+    }
+    
+    /* Hover en radio buttons */
+    [data-testid="stSidebar"] .stRadio > div:hover {
+        background: rgba(255, 255, 255, 0.15) !important;
+    }
+    
+    /* Títulos del sidebar */
+    [data-testid="stSidebar"] h1,
+    [data-testid="stSidebar"] h2,
+    [data-testid="stSidebar"] h3,
+    [data-testid="stSidebar"] h4 {
+        color: #f8fafc !important;
+    }
+    
+    /* Markdown en sidebar */
+    [data-testid="stSidebar"] .stMarkdown {
+        color: #f8fafc !important;
+    }
+    
+    /* Info box en sidebar */
+    [data-testid="stSidebar"] .stAlert {
+        background: rgba(255, 255, 255, 0.1) !important;
+        border: 1px solid rgba(255, 255, 255, 0.2) !important;
+        color: #f8fafc !important;
+    }
+    
+    [data-testid="stSidebar"] .stAlert * {
+        color: #f8fafc !important;
+    }
+    
+    /* Separadores en sidebar */
+    [data-testid="stSidebar"] hr {
+        border-color: rgba(255, 255, 255, 0.2) !important;
     }
     
     .admin-badge {
@@ -304,7 +361,7 @@ st.markdown("""
         box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
     }
     
-    /* Radio buttons */
+    /* Radio buttons del contenido principal */
     .stRadio > div {
         padding: 0.5rem 1rem;
         border-radius: 10px;
@@ -328,13 +385,6 @@ st.markdown("""
         border-bottom: 2px solid rgba(128, 128, 128, 0.2);
         padding-bottom: 0.5rem;
         margin-top: 1.5rem;
-    }
-    
-    /* Sidebar title */
-    [data-testid="stSidebar"] h1, 
-    [data-testid="stSidebar"] h2, 
-    [data-testid="stSidebar"] h3 {
-        color: #f8fafc;
     }
     
     /* Streamlit info - sin fondo blanco */
@@ -436,7 +486,7 @@ def update_admin_email(email, email_password):
 def init_db():
     conn = sqlite3.connect(DB_FILE)
     c = conn.cursor()
-    c.execute('''
+    c.execute(\'\'\'
         CREATE TABLE IF NOT EXISTS cientificos (
             id INTEGER PRIMARY KEY AUTOINCREMENT,
             codigo TEXT UNIQUE,
@@ -462,7 +512,7 @@ def init_db():
             parroquia TEXT,
             comentarios TEXT
         )
-    ''')
+    \'\'\')
     conn.commit()
     conn.close()
 
@@ -480,7 +530,7 @@ def generar_codigo():
 def insertar_cientifico(datos):
     conn = get_db_connection()
     c = conn.cursor()
-    c.execute('''
+    c.execute(\'\'\'
         INSERT INTO cientificos (
             codigo, fecha_registro, nombre_completo, correo_electronico, telefono,
             fecha_nacimiento, genero, pais, ciudad, profesion, nivel_academico,
@@ -488,7 +538,7 @@ def insertar_cientifico(datos):
             equipos_maneja, misiones_campo, disponibilidad, certificaciones,
             municipio, parroquia, comentarios
         ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
-    ''', datos)
+    \'\'\', datos)
     conn.commit()
     conn.close()
 
@@ -509,7 +559,7 @@ def obtener_por_id(codigo):
 def actualizar_cientifico(codigo, datos):
     conn = get_db_connection()
     c = conn.cursor()
-    c.execute('''
+    c.execute(\'\'\'
         UPDATE cientificos SET
             nombre_completo=?, correo_electronico=?, telefono=?, fecha_nacimiento=?,
             genero=?, pais=?, ciudad=?, profesion=?, nivel_academico=?,
@@ -517,7 +567,7 @@ def actualizar_cientifico(codigo, datos):
             equipos_maneja=?, misiones_campo=?, disponibilidad=?, certificaciones=?,
             municipio=?, parroquia=?, comentarios=?
         WHERE codigo=?
-    ''', (*datos, codigo))
+    \'\'\', (*datos, codigo))
     conn.commit()
     conn.close()
 
@@ -1254,3 +1304,11 @@ elif menu == "⚙️ Configuración Admin":
         configuracion_admin()
     else:
         st.error("🔒 Acceso restringido. Inicia sesión como administrador.")
+'''
+
+# Guardar el archivo corregido
+with open('/mnt/agents/output/censo_corregido.py', 'w', encoding='utf-8') as f:
+    f.write(codigo_corregido)
+
+print("Archivo guardado correctamente en /mnt/agents/output/censo_corregido.py")
+print(f"Tamaño: {len(codigo_corregido)} caracteres")
