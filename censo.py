@@ -579,8 +579,13 @@ def enviar_correo_nuevo_registro(datos_cientifico):
 # ==================== FUNCIONES DE PDF ====================
 class PDFCenso(FPDF):
     def header(self):
+        # Logo izquierdo (LOGO_HEADER = "logo02.png")
         if os.path.exists(LOGO_HEADER):
-            self.image(LOGO_HEADER, 10, 8, 25)
+            self.image(LOGO_HEADER, 10, 8, 22)
+        
+        # Logo derecho (LOGO_SIDEBAR = "log.png")
+        if os.path.exists(LOGO_SIDEBAR):
+            self.image(LOGO_SIDEBAR, 265, 8, 22)
 
         self.set_font('Arial', 'B', 14)
         self.set_text_color(30, 58, 138)
@@ -591,10 +596,10 @@ class PDFCenso(FPDF):
         self.set_font('Arial', '', 9)
         self.set_text_color(100, 100, 100)
         self.cell(0, 5, f'Generado el: {datetime.now().strftime("%d/%m/%Y %H:%M")}', 0, 1, 'C')
-        self.ln(8)
+        self.ln(6)
         self.set_draw_color(37, 99, 235)
         self.line(10, self.get_y(), 287, self.get_y())
-        self.ln(5)
+        self.ln(4)
 
     def footer(self):
         self.set_y(-15)
@@ -603,6 +608,88 @@ class PDFCenso(FPDF):
         self.cell(0, 10, f'Pagina {self.page_no()}', 0, 0, 'C')
 
 def generar_pdf_censo(df):
+    # Orientación horizontal (landscape) A4 = 297mm de ancho
+    pdf = PDFCenso(orientation='L', unit='mm', format='A4')
+    pdf.set_auto_page_break(auto=True, margin=15)
+    pdf.add_page()
+    pdf.set_font('Arial', '', 8)
+
+    # Encabezado de tabla
+    pdf.set_fill_color(37, 99, 235)
+    pdf.set_text_color(255, 255, 255)
+    pdf.set_font('Arial', 'B', 7)
+
+    # Ancho útil: 297 - 10 - 10 = 277mm (márgenes de 10mm)
+    headers = ['Codigo', 'Nombre', 'Profesion', 'Institucion', 'Pais', 'Ciudad', 'Municipio', 'Parroquia', 'Nivel', 'Exp', 'Disponibilidad']
+    col_widths = [17, 40, 33, 38, 19, 24, 28, 28, 17, 10, 23]  # suma = 277mm exacto
+
+    for i, header in enumerate(headers):
+        pdf.cell(col_widths[i], 8, header, 1, 0, 'C', True)
+    pdf.ln()
+
+    # Datos
+    pdf.set_text_color(30, 41, 59)
+    pdf.set_font('Arial', '', 6.5)
+
+    for _, row in df.iterrows():
+        textos = [
+            str(row['codigo']),
+            str(row['nombre_completo']),
+            str(row['profesion']),
+            str(row['institucion']),
+            str(row['pais']),
+            str(row['ciudad']) if pd.notna(row['ciudad']) else '',
+            str(row['municipio']) if pd.notna(row['municipio']) else '',
+            str(row['parroquia']) if pd.notna(row['parroquia']) else '',
+            str(row['nivel_academico']),
+            str(row['anos_experiencia']),
+            str(row['disponibilidad'])
+        ]
+
+        # Calcular altura de fila según texto más largo
+        max_lines = 1
+        for j, texto in enumerate(textos):
+            if col_widths[j] > 0 and texto:
+                lines_needed = pdf.get_string_width(texto) / (col_widths[j] - 2)
+                if lines_needed > max_lines:
+                    max_lines = max(1, int(lines_needed) + 1)
+        
+        row_height = 5 * max_lines
+        if row_height < 6:
+            row_height = 6
+
+        # Guardar posición inicial
+        x_start = pdf.get_x()
+        y_start = pdf.get_y()
+
+        # Dibujar cada celda con borde y texto
+        for j, texto in enumerate(textos):
+            # Dibujar borde de la celda
+            pdf.rect(x_start + sum(col_widths[:j]), y_start, col_widths[j], row_height)
+            # Escribir texto dentro de la celda
+            pdf.set_xy(x_start + sum(col_widths[:j]), y_start)
+            align = 'C' if j in [0, 8, 9] else 'L'
+            limit = 60 if j in [1, 2, 3] else 35
+            pdf.multi_cell(col_widths[j], 5, texto[:limit], 0, align)
+
+        # Avanzar a la siguiente fila
+        pdf.set_y(y_start + row_height)
+
+        # Si queda poco espacio, nueva página con encabezado repetido
+        if pdf.get_y() > 180:
+            pdf.add_page()
+            pdf.set_fill_color(37, 99, 235)
+            pdf.set_text_color(255, 255, 255)
+            pdf.set_font('Arial', 'B', 7)
+            for i, header in enumerate(headers):
+                pdf.cell(col_widths[i], 8, header, 1, 0, 'C', True)
+            pdf.ln()
+            pdf.set_text_color(30, 41, 59)
+            pdf.set_font('Arial', '', 6.5)
+
+    temp_file = tempfile.NamedTemporaryFile(delete=False, suffix='.pdf')
+    pdf.output(temp_file.name)
+    return temp_file.name
     pdf = PDFCenso(orientation='L', unit='mm', format='A4')
     pdf.set_auto_page_break(auto=True, margin=15)
     pdf.add_page()
