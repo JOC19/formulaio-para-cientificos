@@ -1,4 +1,3 @@
-
 import streamlit as st
 import pandas as pd
 import sqlite3
@@ -105,24 +104,9 @@ PARROQUIAS_VENEZUELA = [
 # ==================== ESTILOS CSS COMPATIBLE CON MODO OSCURO ====================
 st.markdown("""
     <style>
-    /* ============================================
-       VARIABLES CSS - Se adaptan automáticamente
-       al tema claro/oscuro de Streamlit
-       ============================================ */
-
     /* Fondo principal - usa el color nativo de Streamlit */
     .stApp {
         background: transparent !important;
-    }
-
-    /* Header con logo y título */
-    .header-container {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        gap: 15px;
-        padding: 1rem 0;
-        margin-bottom: 0.5rem;
     }
 
     .main-header {
@@ -135,8 +119,6 @@ st.markdown("""
         text-shadow: 0 2px 4px rgba(30, 64, 175, 0.1);
     }
 
-    /* En modo oscuro, ajustar color del título principal */
-    [data-testid="stAppViewContainer"] .st-emotion-cache-1v0mbdj .main-header,
     [data-theme="dark"] .main-header {
         color: #60a5fa;
         text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
@@ -161,14 +143,6 @@ st.markdown("""
         50% { opacity: 0.9; transform: scale(1.02); }
     }
 
-    .sub-header {
-        font-size: 1.1rem;
-        color: #64748b;
-        text-align: center;
-        margin-bottom: 2rem;
-        margin-top: 0.5rem;
-    }
-
     /* ============================================
        SIDEBAR - FONDO AZUL + LETRAS BLANCAS SIEMPRE
        ============================================ */
@@ -176,12 +150,10 @@ st.markdown("""
         background: linear-gradient(180deg, #1e3a5f 0%, #1e40af 100%) !important;
     }
 
-    /* TODOS los textos del sidebar en blanco */
     [data-testid="stSidebar"] * {
         color: #f8fafc !important;
     }
 
-    /* Radio buttons del sidebar */
     [data-testid="stSidebar"] .stRadio > div {
         background: rgba(255, 255, 255, 0.08) !important;
         border: 1px solid rgba(255, 255, 255, 0.15) !important;
@@ -189,17 +161,10 @@ st.markdown("""
         padding: 0.5rem 1rem;
     }
 
-    /* Radio button seleccionado */
-    [data-testid="stSidebar"] .stRadio > div [role="radiogroup"] label {
-        color: #f8fafc !important;
-    }
-
-    /* Hover en radio buttons */
     [data-testid="stSidebar"] .stRadio > div:hover {
         background: rgba(255, 255, 255, 0.15) !important;
     }
 
-    /* Títulos del sidebar */
     [data-testid="stSidebar"] h1,
     [data-testid="stSidebar"] h2,
     [data-testid="stSidebar"] h3,
@@ -207,23 +172,15 @@ st.markdown("""
         color: #f8fafc !important;
     }
 
-    /* Markdown en sidebar */
-    [data-testid="stSidebar"] .stMarkdown {
-        color: #f8fafc !important;
-    }
-
-    /* Info box en sidebar */
     [data-testid="stSidebar"] .stAlert {
         background: rgba(255, 255, 255, 0.1) !important;
         border: 1px solid rgba(255, 255, 255, 0.2) !important;
-        color: #f8fafc !important;
     }
 
     [data-testid="stSidebar"] .stAlert * {
         color: #f8fafc !important;
     }
 
-    /* Separadores en sidebar */
     [data-testid="stSidebar"] hr {
         border-color: rgba(255, 255, 255, 0.2) !important;
     }
@@ -239,7 +196,6 @@ st.markdown("""
         box-shadow: 0 2px 10px rgba(245, 158, 11, 0.3);
     }
 
-    /* Botones */
     .stButton>button {
         background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%);
         color: white;
@@ -257,9 +213,6 @@ st.markdown("""
         transform: translateY(-2px);
     }
 
-    /* ============================================
-       FORMULARIOS - Fondo transparente, usa el del tema
-       ============================================ */
     .stForm {
         background: rgba(128, 128, 128, 0.05);
         padding: 2rem;
@@ -268,13 +221,11 @@ st.markdown("""
         box-shadow: 0 8px 32px rgba(0, 0, 0, 0.08);
     }
 
-    /* En modo oscuro, ajustar bordes */
     [data-theme="dark"] .stForm {
         border-color: rgba(255, 255, 255, 0.1);
         background: rgba(255, 255, 255, 0.03);
     }
 
-    /* Inputs - heredan colores del tema */
     .stTextInput>div>div>input, 
     .stSelectbox>div>div>select, 
     .stTextArea>div>div>textarea {
@@ -288,16 +239,12 @@ st.markdown("""
         box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.15);
     }
 
-    /* Labels - heredan color del tema */
     .stTextInput label, .stSelectbox label, .stTextArea label, 
     .stNumberInput label, .stDateInput label, .stRadio label {
         font-weight: 600;
         font-size: 0.95rem;
     }
 
-    /* ============================================
-       MENSAJES - Fondos semi-transparentes
-       ============================================ */
     .success-msg {
         padding: 1.2rem;
         background: rgba(16, 185, 129, 0.15);
@@ -332,9 +279,6 @@ st.markdown("""
         border-color: rgba(59, 130, 246, 0.2);
     }
 
-    /* ============================================
-       LOGIN BOX - Fondo semi-transparente
-       ============================================ */
     .login-box {
         max-width: 400px;
         margin: 0 auto;
@@ -350,16 +294,12 @@ st.markdown("""
         background: rgba(255, 255, 255, 0.03);
     }
 
-    /* ============================================
-       DATAFRAME - Sin fondo blanco forzado
-       ============================================ */
     .stDataFrame {
         border-radius: 12px;
         border: 1px solid rgba(128, 128, 128, 0.2);
         box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
     }
 
-    /* Radio buttons del contenido principal */
     .stRadio > div {
         padding: 0.5rem 1rem;
         border-radius: 10px;
@@ -367,31 +307,26 @@ st.markdown("""
         background: rgba(128, 128, 128, 0.05);
     }
 
-    /* Multiselect */
     .stMultiSelect > div > div {
         border-radius: 10px;
         border: 2px solid rgba(128, 128, 128, 0.2);
     }
 
-    /* Markdown text - hereda color del tema */
     .stMarkdown {
         color: inherit;
     }
 
-    /* Section headers */
     .stMarkdown h3, .stMarkdown h4 {
         border-bottom: 2px solid rgba(128, 128, 128, 0.2);
         padding-bottom: 0.5rem;
         margin-top: 1.5rem;
     }
 
-    /* Streamlit info - sin fondo blanco */
     .stAlert {
         border-radius: 12px;
         box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
     }
 
-    /* Download button */
     .stDownloadButton>button {
         background: linear-gradient(135deg, #7c3aed 0%, #6d28d9 100%);
         box-shadow: 0 4px 15px rgba(124, 58, 237, 0.3);
@@ -402,38 +337,28 @@ st.markdown("""
         box-shadow: 0 6px 20px rgba(124, 58, 237, 0.5);
     }
 
-    /* Cards y métricas - sin fondo blanco forzado */
     .css-1r6slb0, .css-1xarl3l {
         border-radius: 12px;
         border: 1px solid rgba(128, 128, 128, 0.2);
         padding: 1rem;
     }
 
-    /* ============================================
-       FIX PARA CONTENEDORES INTERNOS DE STREAMLIT
-       ============================================ */
-
-    /* Eliminar fondos blancos forzados en contenedores */
     [data-testid="stVerticalBlock"] > [data-testid="stVerticalBlockBorderWrapper"] {
         background: transparent !important;
     }
 
-    /* Asegurar que los bloques principales hereden el fondo */
     [data-testid="stAppViewContainer"] {
         background: transparent !important;
     }
 
-    /* Fix para bloques de contenido */
     .block-container {
         background: transparent !important;
     }
 
-    /* Fix para elementos de formulario en modo oscuro */
     [data-testid="stForm"] {
         background: transparent !important;
     }
 
-    /* Ajustar color de texto en modo oscuro para elementos custom */
     [data-theme="dark"] .stMarkdown p,
     [data-theme="dark"] .stMarkdown span,
     [data-theme="dark"] .stTextInput label,
@@ -481,41 +406,68 @@ def update_admin_email(email, email_password):
         json.dump(config, f)
 
 # ==================== FUNCIONES DE BASE DE DATOS ====================
-def init_db():
-    conn = sqlite3.connect(DB_FILE)
-    c = conn.cursor()
-    c.execute('''
-        CREATE TABLE IF NOT EXISTS cientificos (
-            id INTEGER PRIMARY KEY AUTOINCREMENT,
-            codigo TEXT UNIQUE,
-            fecha_registro TEXT,
-            nombre_completo TEXT NOT NULL,
-            correo_electronico TEXT NOT NULL,
-            telefono TEXT,
-            fecha_nacimiento TEXT,
-            genero TEXT,
-            pais TEXT,
-            ciudad TEXT,
-            profesion TEXT,
-            nivel_academico TEXT,
-            institucion TEXT,
-            anos_experiencia INTEGER,
-            area_especializacion TEXT,
-            idiomas TEXT,
-            equipos_maneja TEXT,
-            misiones_campo TEXT,
-            disponibilidad TEXT,
-            certificaciones TEXT,
-            municipio TEXT,
-            parroquia TEXT,
-            comentarios TEXT
-        )
-    ''')
-    conn.commit()
-    conn.close()
 
 def get_db_connection():
     return sqlite3.connect(DB_FILE)
+
+def verificar_y_migrar_tabla():
+    """Verifica que la tabla tenga todas las columnas necesarias y las agrega si faltan."""
+    conn = get_db_connection()
+    c = conn.cursor()
+
+    # Obtener columnas actuales
+    c.execute("PRAGMA table_info(cientificos)")
+    columnas_existentes = {col[1] for col in c.fetchall()}
+
+    # Columnas requeridas
+    columnas_requeridas = {
+        'id': 'INTEGER PRIMARY KEY AUTOINCREMENT',
+        'codigo': 'TEXT UNIQUE',
+        'fecha_registro': 'TEXT',
+        'nombre_completo': 'TEXT NOT NULL',
+        'correo_electronico': 'TEXT NOT NULL',
+        'telefono': 'TEXT',
+        'fecha_nacimiento': 'TEXT',
+        'genero': 'TEXT',
+        'pais': 'TEXT',
+        'ciudad': 'TEXT',
+        'profesion': 'TEXT',
+        'nivel_academico': 'TEXT',
+        'institucion': 'TEXT',
+        'anos_experiencia': 'INTEGER',
+        'area_especializacion': 'TEXT',
+        'idiomas': 'TEXT',
+        'equipos_maneja': 'TEXT',
+        'misiones_campo': 'TEXT',
+        'disponibilidad': 'TEXT',
+        'certificaciones': 'TEXT',
+        'municipio': 'TEXT',
+        'parroquia': 'TEXT',
+        'comentarios': 'TEXT'
+    }
+
+    # Si la tabla no existe, crearla
+    if not columnas_existentes:
+        columnas_sql = ", \
+            ".join([f"{k} {v}" for k, v in columnas_requeridas.items()])
+        c.execute(f"CREATE TABLE cientificos ({columnas_sql})")
+        conn.commit()
+        conn.close()
+        return
+
+    # Si existe, verificar columnas faltantes
+    for columna, tipo in columnas_requeridas.items():
+        if columna not in columnas_existentes:
+            try:
+                c.execute(f"ALTER TABLE cientificos ADD COLUMN {columna} {tipo}")
+            except sqlite3.OperationalError:
+                pass  # Columna ya existe o error menor
+
+    conn.commit()
+    conn.close()
+
+def init_db():
+    verificar_y_migrar_tabla()
 
 def generar_codigo():
     conn = get_db_connection()
@@ -804,14 +756,12 @@ def formulario_registro():
             ])
             ciudad = st.text_input("Ciudad *", placeholder="Ej: Caracas")
 
-            # MUNICIPIO DE SUCRE
             st.markdown("#### 📍 Municipio del Estado Sucre")
             municipio_seleccionado = st.selectbox(
                 "Municipio *",
                 [""] + list(MUNICIPIOS_SUCRE.keys())
             )
 
-            # PARROQUIA DE VENEZUELA (menú independiente)
             st.markdown("#### 🏘️ Parroquia")
             parroquia_seleccionada = st.selectbox(
                 "Parroquia *",
@@ -989,7 +939,6 @@ def editar_registro():
                     pais = st.text_input("País", value=row[8])
                     ciudad = st.text_input("Ciudad", value=row[9])
 
-                    # Municipio
                     municipio_actual = row[20] if row[20] else ""
                     municipio_seleccionado = st.selectbox(
                         "Municipio",
@@ -997,7 +946,6 @@ def editar_registro():
                         index=([""] + list(MUNICIPIOS_SUCRE.keys())).index(municipio_actual) if municipio_actual in MUNICIPIOS_SUCRE else 0
                     )
 
-                    # Parroquia (menú independiente con todas las parroquias)
                     parroquia_actual = row[21] if row[21] else ""
                     parroquia_seleccionada = st.selectbox(
                         "Parroquia",
@@ -1070,10 +1018,8 @@ def mostrar_mapa():
         st.info("📭 No hay registros para mostrar.")
         return
 
-    # Mapa centrado en el estado Sucre
     m = folium.Map(location=[10.5, -63.2], zoom_start=8)
 
-    # Coordenadas aproximadas de los municipios de Sucre
     coordenadas_municipios = {
         "Andrés Eloy Blanco (Casanay)": [10.4, -63.5],
         "Andrés Mata (San José de Areocuar)": [10.3, -63.8],
