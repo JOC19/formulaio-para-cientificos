@@ -12,6 +12,10 @@ from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
 from fpdf import FPDF
 import tempfile
+import time
+import io
+import plotly.express as px
+from datetime import datetime, timedelta
 
 # ==================== CONFIGURACIÓN ====================
 st.set_page_config(
@@ -404,8 +408,6 @@ def update_admin_email(email, email_password):
     config["email_password"] = email_password
     with open(CONFIG_FILE, 'w') as f:
         json.dump(config, f)
-
-# ==================== FUNCIONES DE BASE DE DATOS ====================
 
 # ==================== FUNCIONES DE BASE DE DATOS ====================
 
@@ -1372,3 +1374,21 @@ elif menu == "⚙️ Configuración Admin":
         configuracion_admin()
     else:
         st.error("🔒 Acceso restringido. Inicia sesión como administrador.")
+
+# ==================== PÁGINA DE BIENVENIDA ====================
+def pagina_bienvenida():
+    st.markdown("""
+    # 🌋 Censo de Científicos y Técnicos
+    ## Bienvenido al sistema de registro
+    Esta aplicación permite recopilar información de profesionales en sismología, vulcanología y áreas afines.
+
+    ### 📌 ¿Qué puedes hacer?
+    - **Registrar** tus datos como científico o técnico.
+    - **Consultar** los registros existentes.
+    - **Visualizar** estadísticas y mapas de ubicación.
+    - **Administradores** pueden gestionar y editar los datos.
+
+    **¡Gracias por contribuir al censo!**
+    """)
+    if os.path.exists(LOGO_HEADER):
+        st.image(LOGO_HEADER, width=250)
