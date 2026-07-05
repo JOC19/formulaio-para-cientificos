@@ -5,3 +5,7 @@ fpdf2
 pandas
 supabase
 st-supabase-connection
+openpyxl
+plotly
+streamlit-option-menu
+streamlit-extras
